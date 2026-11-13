@@ -1,0 +1,22 @@
+{
+  "name": "jabal-al-dhafrah-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Jabal Al Dhafrah — bilingual (English/Arabic) AC & home appliance repair website",
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.1",
+    "tailwindcss": "^4.3.5"
+  }
+}

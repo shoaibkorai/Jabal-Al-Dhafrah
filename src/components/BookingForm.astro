@@ -1,0 +1,68 @@
+---
+import { site, contactFor, type Lang } from '../config/site';
+import { t } from '../i18n/ui';
+import { services } from '../data/services';
+import { cities, countries, countryOrder, getCity } from '../data/cities';
+import Icon from './Icon.astro';
+interface Props { lang: Lang; service?: string; city?: string }
+const { lang, service, city } = Astro.props;
+const f = t(lang).form;
+---
+<form class="booking @container grid gap-4 rounded-2xl bg-white p-5 shadow-lg ring-1 ring-slate-200 sm:p-6" data-wa={site.whatsapp} data-intro={f.waIntro}
+  data-l-name={f.name} data-l-phone={f.phone} data-l-service={f.service} data-l-city={f.city} data-l-area={f.area} data-l-message={f.message}>
+  <!-- two columns only when the form itself is wide enough (not in narrow sidebars) -->
+  <div class="grid gap-4 @lg:grid-cols-2">
+    <label class="block text-sm font-medium">{f.name}
+      <input name="name" required autocomplete="name" class="field" />
+    </label>
+    <label class="block text-sm font-medium">{f.phone}
+      <input name="phone" type="tel" required autocomplete="tel" inputmode="tel" dir="ltr" placeholder="+968" class="field text-start" />
+    </label>
+    <label class="block text-sm font-medium">{f.service}
+      <select name="service" required class="field">
+        <option value="">{f.choose}</option>
+        {services.map((s) => <option value={s.name[lang]} selected={s.slug === service}>{s.name[lang]}</option>)}
+      </select>
+    </label>
+    <label class="block text-sm font-medium">{f.city}
+      <select name="city" required class="field">
+        <option value="">{f.choose}</option>
+        {countryOrder.map((cc) => (
+          <optgroup label={countries[cc].short[lang]}>
+            {cities.filter((c) => c.country === cc).map((c) => (
+              <option value={c.parent ? `${c.name[lang]} (${getCity(c.parent).name[lang]})` : c.name[lang]} data-wa={contactFor(cc).whatsapp} selected={c.slug === city}>
+                {c.parent ? `— ${c.name[lang]}` : c.name[lang]}
+              </option>
+            ))}
+          </optgroup>
+        ))}
+      </select>
+    </label>
+  </div>
+  <label class="block text-sm font-medium">{f.area}
+    <input name="area" autocomplete="street-address" class="field" />
+  </label>
+  <label class="block text-sm font-medium">{f.message}
+    <textarea name="message" rows="3" class="field py-3"></textarea>
+  </label>
+  <button type="submit" class="btn-wa w-full text-lg"><Icon name="whatsapp" class="size-6" />{f.submit}</button>
+  <p class="text-center text-xs text-muted">{f.note}</p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form.booking').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(form);
+      const ds = form.dataset;
+      const lines = [ds.intro, ''];
+      for (const k of ['name', 'phone', 'service', 'city', 'area', 'message']) {
+        const v = String(d.get(k) ?? '').trim();
+        if (v) lines.push(`${ds['l' + k[0].toUpperCase() + k.slice(1)]}: ${v}`);
+      }
+      const citySel = form.elements.namedItem('city') as HTMLSelectElement;
+      const wa = citySel.selectedOptions[0]?.dataset.wa || ds.wa;
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+    });
+  });
+</script>

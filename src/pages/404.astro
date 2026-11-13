@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { href } from '../i18n/ui';
+---
+<Base lang="en" path="/404/" title="Page not found" description="This page could not be found." noindex>
+  <section class="container-x py-24 text-center">
+    <p class="text-6xl font-bold text-brand-600">404</p>
+    <h1 class="mt-4 text-2xl font-bold">Page not found · الصفحة غير موجودة</h1>
+    <div class="mt-8 flex justify-center gap-3">
+      <a href={href('en', '/')} class="btn-primary">Home</a>
+      <a href={href('ar', '/')} class="btn-primary">الرئيسية</a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,50 @@
+---
+import { contactFor, type Lang } from '../config/site';
+import { t, href, waLink } from '../i18n/ui';
+import type { Service } from '../data/services';
+import type { City } from '../data/cities';
+import Icon from './Icon.astro';
+import { Image } from 'astro:assets';
+import { servicePhoto } from '../lib/images';
+interface Props { lang: Lang; service: Service; city?: City; priority?: boolean }
+// priority: load this card's photo immediately (use for the first card when it's the biggest thing on screen)
+const { lang, service: s, city, priority = false } = Astro.props;
+const u = t(lang);
+const msg = [u.form.waIntro, `${u.form.service}: ${s.name[lang]}`, city && `${u.form.city}: ${city.name[lang]}`]
+  .filter(Boolean).join('\n');
+const ct = contactFor(city?.country);
+const photo = servicePhoto(s.slug); // decorative here (alt=""): the card title names the service
+---
+<!-- Whole card is clickable via the stretched title link; Call/WhatsApp sit above it.
+     @container: on very narrow cards (old small phones) the buttons collapse to icons so the row never wraps. -->
+<article class="group @container relative flex flex-col rounded-2xl border border-slate-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-brand-500 hover:shadow-lg sm:p-5">
+  {photo ? (
+    <>
+      <div class="-mx-4 -mt-4 overflow-hidden rounded-t-2xl sm:-mx-5 sm:-mt-5">
+        <Image src={photo} alt="" widths={[400, 640, 800]} sizes="(min-width: 1280px) 360px, (min-width: 768px) 50vw, 100vw" quality={70}
+          loading={priority ? 'eager' : 'lazy'} fetchpriority={priority ? 'high' : 'auto'}
+          class="aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.03]" />
+      </div>
+      <span class="relative -mt-7 ms-1 flex size-12 items-center justify-center rounded-xl bg-white text-brand-600 shadow-md ring-1 ring-slate-200"><Icon name={s.icon} class="size-7" /></span>
+    </>
+  ) : (
+    <span class="flex size-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600"><Icon name={s.icon} class="size-7" /></span>
+  )}
+  <h3 class="mt-4 text-lg font-semibold">
+    <a href={href(lang, `/services/${s.slug}/`)} class="after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none">{s.name[lang]}</a>
+  </h3>
+  <p class="mt-2 flex-1 text-sm text-muted">{s.short[lang]}</p>
+  <div class="mt-4 flex flex-nowrap items-center gap-1.5">
+    <span class="me-auto inline-flex items-center gap-1 text-sm font-semibold whitespace-nowrap text-brand-600" aria-hidden="true">
+      {u.viewService}<Icon name="chevron" class="size-4 transition group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1" />
+    </span>
+    <a href={`tel:${ct.phone}`} class="relative z-10 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-accent-500 px-2.5 text-sm font-semibold whitespace-nowrap text-ink hover:bg-accent-400 @max-[17rem]:px-0"
+      aria-label={`${u.call} — ${s.name[lang]}`}>
+      <Icon name="phone" class="size-4" /><span class="@max-[17rem]:sr-only">{u.call}</span>
+    </a>
+    <a href={waLink(lang, msg, ct.whatsapp)} target="_blank" rel="noopener" class="relative z-10 inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-lg bg-wa px-2.5 text-sm font-semibold whitespace-nowrap text-white hover:bg-wa-dark @max-[17rem]:px-0"
+      aria-label={`${u.whatsapp} — ${s.name[lang]}`}>
+      <Icon name="whatsapp" class="size-4" /><span class="@max-[17rem]:sr-only">{u.whatsapp}</span>
+    </a>
+  </div>
+</article>

@@ -1,0 +1,52 @@
+---
+import { site, type Lang } from '../config/site';
+import { t, href, altPath } from '../i18n/ui';
+import Icon from './Icon.astro';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+const current = Astro.url.pathname;
+// Home is active only on the exact home URL; other links match their section
+const isActive = (p: string) => (p === '/' ? current === href(lang, '/') : current.startsWith(href(lang, p)));
+const switchTo = /^\/(ar\/)?404/.test(current) ? (lang === 'en' ? '/ar/' : '/') : altPath(lang, current);
+const links = [
+  { label: u.nav.home, path: '/' },
+  { label: u.nav.services, path: '/services/' },
+  { label: u.nav.areas, path: '/areas/' },
+  { label: u.nav.about, path: '/about/' },
+];
+---
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/95 backdrop-blur">
+  <div class="container-x flex h-16 items-center justify-between gap-4">
+    <a href={href(lang, '/')} class="flex min-h-11 min-w-0 items-center gap-2 text-base font-bold whitespace-nowrap text-brand-700 sm:text-lg">
+      <img src="/logo.svg" alt="" width="32" height="32" class="size-8 shrink-0" />
+      <span class="truncate">{site.name[lang]}</span>
+    </a>
+
+    <nav class="hidden items-center gap-6 md:flex" aria-label="Main">
+      {links.map((l) => (
+        <a href={href(lang, l.path)} aria-current={isActive(l.path) ? 'page' : undefined} class:list={['font-medium hover:text-brand-600', isActive(l.path) ? 'text-brand-600' : 'text-ink']}>{l.label}</a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={switchTo} hreflang={lang === 'en' ? 'ar' : 'en'} lang={lang === 'en' ? 'ar' : 'en'} class="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm sm:px-3 font-semibold text-brand-700 hover:bg-brand-50">
+        <Icon name="globe" class="size-5" />{u.switchLang}
+      </a>
+      <a href={`tel:${site.phone}`} class="btn-primary hidden !min-h-11 md:inline-flex">
+        <Icon name="phone" class="size-5" /><span dir="ltr">{site.phoneDisplay}</span>
+      </a>
+
+      <!-- Mobile menu: no JS needed -->
+      <details class="group relative md:hidden">
+        <summary class="flex size-11 cursor-pointer list-none items-center justify-center rounded-lg hover:bg-slate-100 [&::-webkit-details-marker]:hidden" aria-label="Menu">
+          <Icon name="menu" class="size-6 group-open:hidden" /><Icon name="close" class="hidden size-6 group-open:block" />
+        </summary>
+        <nav class="absolute end-0 top-13 w-64 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl" aria-label="Mobile">
+          {links.map((l) => <a href={href(lang, l.path)} class="block rounded-lg px-4 py-3 font-medium hover:bg-brand-50">{l.label}</a>)}
+          <a href={href(lang, '/contact/')} class="mt-1 block rounded-lg bg-accent-500 px-4 py-3 text-center font-semibold">{u.nav.contact}</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>

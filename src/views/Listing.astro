@@ -1,0 +1,70 @@
+---
+// Services index and Areas index share this view.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { type Lang } from '../config/site';
+import { t, href } from '../i18n/ui';
+import { services } from '../data/services';
+import { countries, countryOrder, topLevel, childrenOf } from '../data/cities';
+import { breadcrumbSchema } from '../lib/schema';
+interface Props { lang: Lang; kind: 'services' | 'areas' }
+const { lang, kind } = Astro.props;
+const u = t(lang);
+const path = `/${kind}/`;
+const isS = kind === 'services';
+const heading = isS ? u.servicesTitle : u.areasTitle;
+const sub = isS ? u.servicesSub : u.areasSub;
+const crumbs = [
+  { name: u.breadcrumbHome, path: href(lang, '/') },
+  { name: isS ? u.nav.services : u.nav.areas, path: href(lang, path) },
+];
+---
+<Base lang={lang} path={path} title={heading} description={sub} schema={[breadcrumbSchema(crumbs)]}>
+  <section class="bg-gradient-to-br from-brand-900 to-brand-700 text-white">
+    <div class="container-x py-10 sm:py-14">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-6 text-3xl font-bold sm:text-4xl">{heading}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-brand-100">{sub}</p>
+    </div>
+  </section>
+
+  {isS ? (
+    <section class="container-x py-14">
+      <h2 class="sr-only">{u.nav.services}</h2>
+      <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {services.map((s, i) => <ServiceCard lang={lang} service={s} priority={i === 0} />)}
+      </div>
+    </section>
+  ) : (
+    <div class="container-x space-y-14 py-14">
+      {countryOrder.map((cc) => (
+        <section>
+          <h2 class="h2">{countries[cc].name[lang]}</h2>
+          <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {topLevel(cc).map((c) => {
+              const kids = childrenOf(c.slug);
+              return (
+                <div class="rounded-2xl border border-slate-200 p-5 hover:border-brand-500">
+                  <a href={href(lang, `/areas/${c.slug}/`)} class="flex gap-3">
+                    <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600"><Icon name="pin" class="size-6" /></span>
+                    <span>
+                      <span class="block text-lg font-semibold hover:text-brand-600">{c.name[lang]}</span>
+                      <span class="mt-0.5 block text-sm text-muted">{c.governorate[lang]} · {c.response[lang]}</span>
+                    </span>
+                  </a>
+                  {kids.length > 0 && (
+                    <ul class="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
+                      {kids.map((k) => <li><a href={href(lang, `/areas/${k.slug}/`)} class="inline-flex min-h-10 items-center rounded-full bg-slate-100 px-3.5 text-sm hover:bg-brand-50 hover:text-brand-700">{k.name[lang]}</a></li>)}
+                    </ul>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      ))}
+    </div>
+  )}
+</Base>

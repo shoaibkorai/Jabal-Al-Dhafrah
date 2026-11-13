@@ -1,0 +1,7 @@
+---
+import V from '../../../views/Service.astro';
+import { services } from '../../../data/services';
+export const getStaticPaths = () => services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+const { service } = Astro.props;
+---
+<V lang="ar" service={service} />

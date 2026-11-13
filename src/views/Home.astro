@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import BookingForm from '../components/BookingForm.astro';
+import Faq from '../components/Faq.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { site, type Lang } from '../config/site';
+import { t, href, waLink } from '../i18n/ui';
+import { services } from '../data/services';
+import { countries, countryOrder, topLevel } from '../data/cities';
+import { faqSchema } from '../lib/schema';
+import { Image } from 'astro:assets';
+import hero from '../assets/hero.jpg'; // ← replace with your real team photo
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+const whyIcons = ['bolt', 'tag', 'user', 'shield'];
+// A general FAQ drawn from the strongest service questions
+const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], services[3].faqs[0], services[0].faqs[2]]
+  .map((f) => ({ q: f.q[lang], a: f.a[lang] }));
+---
+<Base lang={lang} path="/" title={`${site.tagline[lang]} | ${site.name[lang]}`} description={u.heroSub} schema={[faqSchema(faqs)]}>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-900 via-brand-700 to-brand-600 text-white">
+    <div class="pointer-events-none absolute -end-24 -top-24 size-96 rounded-full bg-white/5"></div>
+    <div class="pointer-events-none absolute -bottom-32 -start-16 size-80 rounded-full bg-accent-500/10"></div>
+    <div class="container-x relative grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.1fr_1fr] lg:py-20">
+      <div>
+        <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium">
+          <span class="size-2 rounded-full bg-green-400"></span>{u.hoursValue}
+        </p>
+        <h1 class="mt-5 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">{u.heroTitle}</h1>
+        <p class="mt-5 max-w-xl text-lg text-brand-100">{u.heroSub}</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={`tel:${site.phone}`} class="btn-primary text-lg"><Icon name="phone" class="size-5" />{u.callNow}</a>
+          <a href={waLink(lang)} target="_blank" rel="noopener" class="btn-wa text-lg"><Icon name="whatsapp" class="size-5" />{u.bookWhatsapp}</a>
+        </div>
+        <ul class="mt-8 grid grid-cols-2 gap-3 text-sm sm:text-base">
+          {u.trust.map((x) => <li class="flex items-start gap-2"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-accent-400" />{x}</li>)}
+        </ul>
+      </div>
+      <div class="relative">
+        <Image src={hero} alt={u.heroAlt} widths={[480, 768, 1024, 1400]} sizes="(min-width: 1024px) 560px, 100vw"
+          loading="eager" fetchpriority="high" class="aspect-[16/10] w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/20" />
+        <div class="absolute -bottom-5 start-4 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-ink shadow-xl sm:start-6">
+          <Icon name="shield" class="size-8 text-wa" />
+          <span class="text-sm leading-tight font-semibold">{u.trust[2]}<br /><span class="font-normal text-muted">{u.trust[3]}</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service strip (scrolls sideways on phones) -->
+  <nav aria-label={u.servicesTitle} class="bg-brand-900 text-white">
+    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-x-6 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+      {services.map((s) => (
+        <li class="shrink-0 snap-start">
+          <a href={href(lang, `/services/${s.slug}/`)} class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap hover:bg-white/10">
+            <span class="flex size-8 items-center justify-center rounded-md bg-accent-500 text-ink"><Icon name={s.icon} class="size-5" /></span>
+            {s.name[lang]}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <!-- Services -->
+  <section class="container-x py-14 sm:py-20">
+    <h2 class="h2">{u.servicesTitle}</h2>
+    <p class="mt-2 text-muted">{u.servicesSub}</p>
+    <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      {services.map((s) => <ServiceCard lang={lang} service={s} />)}
+    </div>
+  </section>
+
+  <!-- Why us -->
+  <section class="bg-brand-50">
+    <div class="container-x py-14 sm:py-20">
+      <h2 class="h2">{u.whyTitle}</h2>
+      <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {u.why.map((w, i) => (
+          <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <Icon name={whyIcons[i]} class="size-8 text-brand-600" />
+            <h3 class="mt-4 font-semibold">{w.t}</h3>
+            <p class="mt-2 text-sm text-muted">{w.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="container-x py-14 sm:py-20">
+    <h2 class="h2">{u.stepsTitle}</h2>
+    <ol class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {u.steps.map((s, i) => (
+        <li class="relative rounded-2xl border border-slate-200 p-6">
+          <span class="flex size-10 items-center justify-center rounded-full bg-accent-500 font-bold text-ink">{i + 1}</span>
+          <h3 class="mt-4 font-semibold">{s.t}</h3>
+          <p class="mt-2 text-sm text-muted">{s.d}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Areas -->
+  <section class="bg-slate-50">
+    <div class="container-x py-14 sm:py-20">
+      <h2 class="h2">{u.areasTitle}</h2>
+      <p class="mt-2 text-muted">{u.areasSub}</p>
+      {countryOrder.map((cc) => (
+        <>
+          <h3 class="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">{countries[cc].name[lang]}</h3>
+          <ul class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {topLevel(cc).map((c) => (
+              <li>
+                <a href={href(lang, `/areas/${c.slug}/`)} class="flex min-h-12 items-center gap-2 rounded-xl bg-white px-4 py-3 font-medium shadow-sm ring-1 ring-slate-200 hover:ring-brand-500">
+                  <Icon name="pin" class="size-5 shrink-0 text-brand-600" />{c.name[lang]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ))}
+      <a href={href(lang, '/areas/')} class="mt-6 inline-flex min-h-11 items-center gap-1 font-semibold text-brand-600">{u.nav.areas}<Icon name="chevron" class="size-4 rtl:rotate-180" /></a>
+    </div>
+  </section>
+
+  <Faq title={u.faqTitle} items={faqs} />
+
+  <!-- Booking (always visible on mobile; desktop has it in the hero too) -->
+  <section class="bg-gradient-to-br from-brand-700 to-brand-900" id="book-form">
+    <div class="container-x grid gap-8 py-14 sm:py-20 lg:grid-cols-2 lg:items-center">
+      <div class="text-white">
+        <h2 class="text-2xl font-bold sm:text-3xl">{u.bookTitle}</h2>
+        <p class="mt-3 text-brand-100">{u.bookSub}</p>
+        <a href={`tel:${site.phone}`} class="mt-6 inline-flex min-h-12 items-center gap-2 text-2xl font-bold" dir="ltr"><Icon name="phone" class="size-6" />{site.phoneDisplay}</a>
+      </div>
+      <BookingForm lang={lang} />
+    </div>
+  </section>
+</Base>

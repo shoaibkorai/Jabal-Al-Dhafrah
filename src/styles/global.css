@@ -1,0 +1,67 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+  --color-brand-50: #eef7fb;
+  --color-brand-100: #d5ecf5;
+  --color-brand-500: #0f7fb3;
+  --color-brand-600: #0b6896;
+  --color-brand-700: #0a5378;
+  --color-brand-900: #072f45;
+  --color-accent-400: #ffb547;
+  --color-accent-500: #f59e0b;
+  --color-wa: #128043; /* WhatsApp-style green, darkened for 4.5:1 contrast with white */
+  --color-wa-dark: #0e6a37;
+  --color-ink: #0f1d2a;
+  --color-muted: #52606d;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+  /* Arabic reads better slightly larger with more line height */
+  [dir='rtl'] body {
+    line-height: 1.8;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+@utility btn {
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 font-semibold transition-colors;
+}
+@utility btn-primary {
+  @apply btn bg-accent-500 text-ink hover:bg-accent-400;
+}
+@utility btn-wa {
+  @apply btn bg-wa text-white hover:bg-wa-dark;
+}
+@utility btn-ghost {
+  @apply btn border border-white/40 text-white hover:bg-white/10;
+}
+@utility h2 {
+  @apply text-2xl font-bold tracking-tight text-ink sm:text-3xl;
+}
+@utility field {
+  @apply mt-1 block min-h-12 w-full rounded-xl border border-slate-300 bg-white px-4 text-base text-ink placeholder:text-slate-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none;
+}

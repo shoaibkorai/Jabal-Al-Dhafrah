@@ -1,0 +1,50 @@
+---
+import { site, type Lang } from '../config/site';
+import { t, href } from '../i18n/ui';
+import { services } from '../data/services';
+import { countries, countryOrder, topLevel } from '../data/cities';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const u = t(lang);
+---
+<footer class="bg-brand-900 pb-24 text-slate-300 md:pb-0">
+  <div class="container-x grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <p class="text-lg font-bold text-white">{site.name[lang]}</p>
+      <p class="mt-3 text-sm">{u.footerAbout}</p>
+      <p class="mt-4 text-sm"><span class="font-semibold text-white">{u.hours}:</span> {u.hoursValue}</p>
+    </div>
+    <div>
+      <p class="font-semibold text-white">{u.nav.services}</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {services.map((s) => <li><a class="hover:text-white" href={href(lang, `/services/${s.slug}/`)}>{s.name[lang]}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="font-semibold text-white">{u.nav.areas}</p>
+      {countryOrder.map((cc) => (
+        <>
+          <p class="mt-3 text-xs font-semibold text-slate-400 uppercase">{countries[cc].short[lang]}</p>
+          <ul class="mt-1 grid grid-cols-2 gap-x-2 gap-y-1 text-sm">
+            {topLevel(cc).map((c) => <li><a class="hover:text-white" href={href(lang, `/areas/${c.slug}/`)}>{c.name[lang]}</a></li>)}
+          </ul>
+        </>
+      ))}
+    </div>
+    <div>
+      <p class="font-semibold text-white">{u.nav.contact}</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a class="hover:text-white" href={`tel:${site.phone}`} dir="ltr">{site.phoneDisplay}</a></li>
+        <li><a class="hover:text-white" href={`tel:${site.phone2}`} dir="ltr">{site.phone2Display}</a></li>
+        <li><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li>{site.address.street[lang]}, {site.address.locality[lang]}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-x flex flex-col gap-2 py-5 text-xs sm:flex-row sm:justify-between">
+      <p>© {new Date().getFullYear()} {site.legalName[lang]} · {lang === 'ar' ? 'س.ت' : 'C.R. No.'} {site.crNumber} · {u.rights}</p>
+      <a class="hover:text-white" href={href(lang, '/privacy/')}>{u.privacy}</a>
+    </div>
+  </div>
+</footer>

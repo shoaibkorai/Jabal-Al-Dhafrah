@@ -1,0 +1,105 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import BookingForm from '../components/BookingForm.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { contactFor, type Lang } from '../config/site';
+import { t, href, waLink } from '../i18n/ui';
+import { services } from '../data/services';
+import { cities, countries, getCity, childrenOf, topLevel, type City } from '../data/cities';
+import { breadcrumbSchema, BUSINESS_ID } from '../lib/schema';
+interface Props { lang: Lang; city: City }
+const { lang, city: c } = Astro.props;
+const u = t(lang);
+const ct = contactFor(c.country);
+const country = countries[c.country];
+const parent = c.parent ? getCity(c.parent) : undefined;
+const kids = childrenOf(c.slug);
+const path = `/areas/${c.slug}/`;
+const crumbs = [
+  { name: u.breadcrumbHome, path: href(lang, '/') },
+  { name: u.nav.areas, path: href(lang, '/areas/') },
+  ...(parent ? [{ name: parent.name[lang], path: href(lang, `/areas/${parent.slug}/`) }] : []),
+  { name: c.name[lang], path: href(lang, path) },
+];
+// "Al Khuwair, Muscat" style for child areas in Oman's capital; otherwise "Name, Country"
+// People search "Al Khuwair Muscat", not "Al Khuwair Bawshar", so Oman areas use Muscat.
+const metro = parent ? (c.country === 'om' ? getCity('muscat') : parent) : undefined;
+const where = `${c.name[lang]}${lang === 'ar' ? '، ' : ', '}${metro ? metro.name[lang] : country.short[lang]}`;
+const title = lang === 'en' ? `AC & Appliance Repair in ${where}` : `صيانة المكيفات والأجهزة المنزلية في ${where}`;
+const desc = lang === 'en'
+  ? `AC repair, AC cleaning and home appliance repair in ${where}. ${c.response.en}. Covering ${c.areas.en.slice(0, 4).join(', ')} and more.`
+  : `تصليح وتنظيف المكيفات وصيانة الأجهزة المنزلية في ${where}. ${c.response.ar}. نغطي ${c.areas.ar.slice(0, 4).join('، ')} وغيرها.`;
+// Siblings under the same parent, or other main cities in the same country
+const nearby = (parent ? childrenOf(parent.slug) : topLevel(c.country)).filter((x) => x.slug !== c.slug);
+const schema = [
+  breadcrumbSchema(crumbs),
+  {
+    '@context': 'https://schema.org', '@type': 'Service', name: title, serviceType: 'AC and home appliance repair',
+    provider: { '@id': BUSINESS_ID },
+    areaServed: { '@type': 'Place', name: c.name[lang], address: { '@type': 'PostalAddress', addressLocality: c.name.en, addressCountry: c.country.toUpperCase() } },
+  },
+];
+---
+<Base lang={lang} path={path} title={title} description={desc} schema={schema} country={c.country}>
+  <section class="bg-gradient-to-br from-brand-900 to-brand-700 text-white">
+    <div class="container-x py-10 sm:py-14">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-6 text-3xl leading-tight font-bold sm:text-4xl">{title}</h1>
+      <p class="mt-4 max-w-2xl text-lg text-brand-100">{c.blurb[lang]}</p>
+      <div class="mt-6 flex flex-wrap gap-3 text-sm">
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5"><Icon name="clock" class="size-4" />{u.responseTime}: {c.response[lang]}</span>
+        <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5"><Icon name="pin" class="size-4" />{c.governorate[lang]} · {country.short[lang]}</span>
+      </div>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={`tel:${ct.phone}`} class="btn-primary text-lg"><Icon name="phone" class="size-5" />{u.callNow}</a>
+        <a href={waLink(lang, `${u.form.waIntro}\n${u.form.city}: ${where}`, ct.whatsapp)} target="_blank" rel="noopener" class="btn-wa text-lg"><Icon name="whatsapp" class="size-5" />{u.bookWhatsapp}</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container-x grid gap-10 py-14 lg:grid-cols-[1fr_340px]">
+    <div>
+      <h2 class="h2">{u.servicesIn(c.name[lang])}</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        {services.map((s, i) => <ServiceCard lang={lang} service={s} city={c} priority={i === 0} />)}
+      </div>
+
+      {kids.length > 0 && (
+        <>
+          <h2 class="h2 mt-12">{u.areasInCity(c.name[lang])}</h2>
+          <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {kids.map((k) => (
+              <li><a href={href(lang, `/areas/${k.slug}/`)} class="flex min-h-12 items-center gap-2 rounded-xl bg-white px-4 py-3 font-medium shadow-sm ring-1 ring-slate-200 hover:ring-brand-500"><Icon name="pin" class="size-5 shrink-0 text-brand-600" />{k.name[lang]}</a></li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <h2 class="h2 mt-12">{u.areasCovered}</h2>
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {c.areas[lang].map((a) => <li class="rounded-full bg-slate-100 px-4 py-2">{a}</li>)}
+      </ul>
+
+      {nearby.length > 0 && (
+        <>
+          <h2 class="h2 mt-12">{u.nearbyAreas}</h2>
+          <ul class="mt-6 flex flex-wrap gap-2">
+            {nearby.map((n) => <li><a href={href(lang, `/areas/${n.slug}/`)} class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-slate-200 px-4 hover:border-brand-500"><Icon name="pin" class="size-4" />{n.name[lang]}</a></li>)}
+          </ul>
+        </>
+      )}
+
+      <div class="mt-12 overflow-hidden rounded-2xl ring-1 ring-slate-200">
+        <iframe title={c.name[lang]} loading="lazy" class="h-72 w-full" referrerpolicy="no-referrer-when-downgrade"
+          src={`https://maps.google.com/maps?q=${c.geo.lat},${c.geo.lng}&z=${parent ? 13 : 11}&output=embed&hl=${lang}`}></iframe>
+      </div>
+    </div>
+
+    <aside class="lg:sticky lg:top-24 lg:self-start">
+      <h2 class="mb-4 text-xl font-bold">{u.bookTitle}</h2>
+      <BookingForm lang={lang} city={c.slug} />
+    </aside>
+  </div>
+</Base>

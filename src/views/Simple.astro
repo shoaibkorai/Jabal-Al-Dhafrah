@@ -1,0 +1,90 @@
+---
+// About, Contact and Privacy pages.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import BookingForm from '../components/BookingForm.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { site, type Lang } from '../config/site';
+import { t, href, waLink } from '../i18n/ui';
+import { breadcrumbSchema } from '../lib/schema';
+interface Props { lang: Lang; kind: 'about' | 'contact' | 'privacy' }
+const { lang, kind } = Astro.props;
+const u = t(lang);
+const n = site.name[lang];
+
+const pages = {
+  about: {
+    en: {
+      title: `About ${n}`,
+      desc: `${n} is an independent AC and home appliance repair service in Oman, built on fast response, honest pricing and repairs that last.`,
+      body: [
+        `${n} was started to fix what customers in Oman complain about most when booking repairs: technicians who arrive late, prices that change after the job and fixes that fail a week later.`,
+        'Our approach is simple. We diagnose first, agree the price with you before any work, use quality parts and stand behind every repair with a written warranty.',
+        'We are an independent service company. We repair all major brands but are not an authorised agent of any manufacturer — for in-warranty repairs, contact your brand’s official service centre.',
+      ],
+    },
+    ar: {
+      title: `من نحن — ${n}`,
+      desc: `${n} خدمة مستقلة لصيانة المكيفات والأجهزة المنزلية في عُمان، تقوم على سرعة الاستجابة والأسعار الصادقة والإصلاح الذي يدوم.`,
+      body: [
+        `تأسست ${n} لمعالجة أكثر ما يشتكي منه العملاء في عُمان عند حجز الصيانة: فنيون يتأخرون، وأسعار تتغير بعد العمل، وإصلاحات تتعطل بعد أسبوع.`,
+        'طريقتنا بسيطة: نفحص أولًا، ونتفق معك على السعر قبل أي عمل، ونستخدم قطعًا عالية الجودة، ونضمن كل إصلاح بضمان مكتوب.',
+        'نحن شركة خدمات مستقلة، نصلح جميع الماركات الرئيسية لكننا لسنا وكيلًا معتمدًا لأي مصنّع. للإصلاحات المشمولة بضمان المصنع، تواصل مع مركز الخدمة الرسمي لعلامتك التجارية.',
+      ],
+    },
+  },
+  contact: {
+    en: { title: 'Book a Technician', desc: `Book AC or appliance repair with ${n}. Call, WhatsApp or send the form — same-day visits in Muscat.`, body: [u.bookSub] },
+    ar: { title: 'احجز فنيًا', desc: `احجز صيانة المكيفات أو الأجهزة المنزلية مع ${n} عبر الاتصال أو واتساب أو النموذج — زيارة في نفس اليوم في مسقط.`, body: [u.bookSub] },
+  },
+  privacy: {
+    en: {
+      title: 'Privacy Policy',
+      desc: `How ${n} handles your information.`,
+      body: [
+        'This website does not store the details you type into the booking form. When you press “Send on WhatsApp”, your details are placed into a WhatsApp message on your own device, and you choose whether to send it.',
+        'Information you send us by phone or WhatsApp is used only to arrange and carry out your service, and is not sold or shared with third parties for marketing.',
+        'Pages may embed Google Maps, which is subject to Google’s privacy policy. Contact us at any time to ask what information we hold about you or to have it deleted.',
+      ],
+    },
+    ar: {
+      title: 'سياسة الخصوصية',
+      desc: `كيف تتعامل ${n} مع بياناتك.`,
+      body: [
+        'لا يحفظ هذا الموقع البيانات التي تكتبها في نموذج الحجز. عند الضغط على "إرسال عبر واتساب" توضع بياناتك في رسالة واتساب على جهازك، وأنت من يقرر إرسالها.',
+        'تُستخدم المعلومات التي ترسلها إلينا عبر الهاتف أو واتساب فقط لترتيب الخدمة وتنفيذها، ولا تُباع أو تُشارك مع أطراف أخرى لأغراض تسويقية.',
+        'قد تتضمن الصفحات خرائط Google، وتخضع لسياسة خصوصية Google. يمكنك التواصل معنا في أي وقت لمعرفة المعلومات التي نحتفظ بها عنك أو لطلب حذفها.',
+      ],
+    },
+  },
+};
+const p = pages[kind][lang];
+const path = `/${kind}/`;
+const crumbs = [
+  { name: u.breadcrumbHome, path: href(lang, '/') },
+  { name: p.title, path: href(lang, path) },
+];
+---
+<Base lang={lang} path={path} title={p.title} description={p.desc} schema={[breadcrumbSchema(crumbs)]}>
+  <section class="bg-gradient-to-br from-brand-900 to-brand-700 text-white">
+    <div class="container-x py-10 sm:py-14">
+      <Breadcrumbs items={crumbs} />
+      <h1 class="mt-6 text-3xl font-bold sm:text-4xl">{p.title}</h1>
+    </div>
+  </section>
+  <div class:list={['container-x py-14', kind === 'contact' && 'grid gap-12 lg:grid-cols-2']}>
+    <div class="max-w-3xl space-y-4 text-lg leading-relaxed">
+      {p.body.map((x) => <p>{x}</p>)}
+      {kind === 'contact' && (
+        <ul class="mt-8 space-y-4 text-base">
+          <li><a href={`tel:${site.phone}`} class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="phone" class="size-6 text-brand-600" /><span dir="ltr">{site.phoneDisplay}</span></a></li>
+          <li><a href={`tel:${site.phone2}`} class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="phone" class="size-6 text-brand-600" /><span dir="ltr">{site.phone2Display}</span></a></li>
+          <li><a href={waLink(lang)} target="_blank" rel="noopener" class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="whatsapp" class="size-6 text-wa" />{u.whatsapp}</a></li>
+          <li class="flex items-center gap-3"><Icon name="pin" class="size-6 text-brand-600" />{site.address.street[lang]}, {site.address.locality[lang]}</li>
+          <li class="flex items-center gap-3"><Icon name="clock" class="size-6 text-brand-600" />{u.hoursValue}</li>
+        </ul>
+      )}
+    </div>
+    {kind === 'contact' && <BookingForm lang={lang} />}
+  </div>
+</Base>

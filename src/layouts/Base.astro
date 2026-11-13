@@ -1,0 +1,65 @@
+---
+import '@fontsource/ibm-plex-sans-arabic/400.css';
+import '@fontsource/ibm-plex-sans-arabic/600.css';
+import '@fontsource/ibm-plex-sans-arabic/700.css';
+import '../styles/global.css';
+import { site, type Lang } from '../config/site';
+import { t, href } from '../i18n/ui';
+import { business } from '../lib/schema';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import type { CountryCode } from '../data/cities';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** language-neutral path, e.g. "/services/ac-repair/" */
+  path: string;
+  schema?: object[];
+  noindex?: boolean;
+  country?: CountryCode; // picks the local phone/WhatsApp for the mobile bar
+  ogImage?: string; // site-relative image path for link previews (WhatsApp, social)
+}
+const { lang, title, description, path, schema = [], noindex = false, country, ogImage = '/og.png' } = Astro.props;
+const abs = (l: Lang) => new URL(href(l, path), site.url).href;
+const fullTitle = title.includes(site.name[lang]) ? title : `${title} | ${site.name[lang]}`;
+const jsonld = [business(lang), ...schema];
+---
+<!doctype html>
+<html lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <link rel="canonical" href={abs(lang)} />
+    <link rel="alternate" hreflang="en" href={abs('en')} />
+    <link rel="alternate" hreflang="ar" href={abs('ar')} />
+    <link rel="alternate" hreflang="x-default" href={abs('en')} />
+    <meta name="theme-color" content="#0a5378" />
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name[lang]} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={abs(lang)} />
+    <meta property="og:image" content={new URL(ogImage, site.url).href} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_OM' : 'en_OM'} />
+    <meta property="og:locale:alternate" content={lang === 'ar' ? 'en_OM' : 'ar_OM'} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
+  </head>
+  <body>
+    <a href="#main" class="sr-only z-50 rounded bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:start-2 focus:top-2">{t(lang).skip}</a>
+    <Header lang={lang} />
+    <main id="main"><slot /></main>
+    <Footer lang={lang} />
+    <MobileBar lang={lang} country={country} />
+  </body>
+</html>
