@@ -52,10 +52,10 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
 
   <!-- Service strip (scrolls sideways on phones) -->
   <nav aria-label={u.servicesTitle} class="bg-brand-900 text-white">
-    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-x-6 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:gap-x-4 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
       {services.map((s) => (
         <li class="shrink-0 snap-start">
-          <a href={href(lang, `/services/${s.slug}/`)} class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold whitespace-nowrap hover:bg-white/10">
+          <a href={href(lang, `/services/${s.slug}/`)} class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm leading-tight font-semibold whitespace-nowrap hover:bg-white/10 lg:whitespace-normal">
             <span class="flex size-8 items-center justify-center rounded-md bg-accent-500 text-ink"><Icon name={s.icon} class="size-5" /></span>
             {s.name[lang]}
           </a>

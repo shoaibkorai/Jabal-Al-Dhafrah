@@ -9,8 +9,8 @@ export const site = {
   legalName: { en: 'Jabal Al Dhafrah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
   crNumber: '1029306',
   tagline: {
-    en: 'AC & Appliance Repair in Oman',
-    ar: 'صيانة المكيفات والأجهزة المنزلية في عُمان',
+    en: 'AC, Appliance & Electrical Repair in Oman',
+    ar: 'صيانة المكيفات والأجهزة المنزلية والكهرباء في عُمان',
   },
   phone: '+96897854050', // E.164, used for tel: links
   phoneDisplay: '+968 9785 4050',
@@ -26,7 +26,9 @@ export const site = {
     postalCode: '170',
     country: 'OM',
   },
-  geo: { lat: 23.588, lng: 58.3829 }, // business location
+  geo: { lat: 23.4860442, lng: 58.5012148 }, // shop location (from Google Maps pin)
+  // Opens Google Maps navigation to the shop (app on phones, website on desktop)
+  mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=23.4860442,58.5012148',
   hours: { opens: '07:00', closes: '23:00', days: 'Sa-Th' as const },
   foundedYear: 2026,
   // Add profile URLs as they go live (Google Business Profile, Instagram, …)
@@ -38,13 +40,5 @@ export const site = {
 export type Lang = 'en' | 'ar';
 
 type Contact = { phone: string; phoneDisplay: string; whatsapp: string };
-// Local numbers per country. Leave a country as null to fall back to the main
-// number above. A local UAE/Saudi number converts far better on those pages.
-export const countryContacts: Record<'om' | 'ae' | 'sa', Contact | null> = {
-  om: null,
-  ae: null, // e.g. { phone: '+971500000000', phoneDisplay: '+971 50 000 0000', whatsapp: '971500000000' }
-  sa: null, // e.g. { phone: '+966500000000', phoneDisplay: '+966 50 000 0000', whatsapp: '966500000000' }
-};
-
-export const contactFor = (country?: 'om' | 'ae' | 'sa'): Contact =>
-  (country && countryContacts[country]) || { phone: site.phone, phoneDisplay: site.phoneDisplay, whatsapp: site.whatsapp };
+// Single country (Oman) for now; kept as a function so per-area numbers can be added later.
+export const contactFor = (_country?: 'om'): Contact => ({ phone: site.phone, phoneDisplay: site.phoneDisplay, whatsapp: site.whatsapp });

@@ -29,7 +29,7 @@ const metro = parent ? (c.country === 'om' ? getCity('muscat') : parent) : undef
 const where = `${c.name[lang]}${lang === 'ar' ? '، ' : ', '}${metro ? metro.name[lang] : country.short[lang]}`;
 const title = lang === 'en' ? `AC & Appliance Repair in ${where}` : `صيانة المكيفات والأجهزة المنزلية في ${where}`;
 const desc = lang === 'en'
-  ? `AC repair, AC cleaning and home appliance repair in ${where}. ${c.response.en}. Covering ${c.areas.en.slice(0, 4).join(', ')} and more.`
+  ? `AC repair, AC cleaning and home appliance repair in ${where}${c.aka?.length ? ` (${c.aka[0]})` : ''}. ${c.response.en}. Covering ${c.areas.en.slice(0, 4).join(', ')} and more.`
   : `تصليح وتنظيف المكيفات وصيانة الأجهزة المنزلية في ${where}. ${c.response.ar}. نغطي ${c.areas.ar.slice(0, 4).join('، ')} وغيرها.`;
 // Siblings under the same parent, or other main cities in the same country
 const nearby = (parent ? childrenOf(parent.slug) : topLevel(c.country)).filter((x) => x.slug !== c.slug);
@@ -47,6 +47,7 @@ const schema = [
     <div class="container-x py-10 sm:py-14">
       <Breadcrumbs items={crumbs} />
       <h1 class="mt-6 text-3xl leading-tight font-bold sm:text-4xl">{title}</h1>
+      {lang === 'en' && c.aka?.length && <p class="mt-2 text-sm text-brand-100">Also spelled: {c.aka.join(', ')}</p>}
       <p class="mt-4 max-w-2xl text-lg text-brand-100">{c.blurb[lang]}</p>
       <div class="mt-6 flex flex-wrap gap-3 text-sm">
         <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5"><Icon name="clock" class="size-4" />{u.responseTime}: {c.response[lang]}</span>

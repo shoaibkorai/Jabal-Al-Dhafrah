@@ -6,7 +6,7 @@ type L = Record<Lang, string[]>;
 export interface Service {
   slug: string;
   icon: string; // key in components/Icon.astro
-  category: 'ac' | 'appliance';
+  category: 'ac' | 'appliance' | 'electrical' | 'commercial';
   name: T;
   title: T; // <title> / H1
   short: T; // card + meta description
@@ -642,6 +642,164 @@ export const services: Service[] = [
         a: {
           en: 'Typically 8–12 years. Hard water can shorten that without regular descaling.',
           ar: 'عادة من 8 إلى 12 سنة، وقد يقصر عمره بسبب الماء العسر إذا لم تتم إزالة الترسبات بانتظام.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'electrical-works',
+    icon: 'plug',
+    category: 'electrical',
+    name: { en: 'Electrical Works', ar: 'الأعمال الكهربائية' },
+    title: {
+      en: 'Electrician & Electrical Works in Oman',
+      ar: 'كهربائي وأعمال كهربائية في عُمان',
+    },
+    short: {
+      en: 'Electrician for homes, shops and offices: tripping breakers, wiring, sockets, lights, fans and DB boards.',
+      ar: 'كهربائي للمنازل والمحلات والمكاتب: فصل القواطع والتمديدات والأفياش والإنارة والمراوح ولوحات التوزيع.',
+    },
+    intro: {
+      en: [
+        'From a breaker that keeps tripping to a full rewiring job, our electricians find the fault safely and fix it properly. We work in villas, apartments, shops, offices and workshops.',
+        'Electrical faults are a safety risk, so every job ends with testing: correct breaker sizes, proper earthing and no loose connections. We also install the dedicated circuits that ACs, water heaters and ovens need.',
+      ],
+      ar: [
+        'من قاطع يفصل باستمرار إلى إعادة تمديد كاملة، يحدد كهربائيونا العطل بأمان ويصلحونه بشكل صحيح. نعمل في الفلل والشقق والمحلات والمكاتب والورش.',
+        'الأعطال الكهربائية خطر على السلامة، لذلك ينتهي كل عمل بالاختبار: قواطع بالقدرة الصحيحة وتأريض سليم ولا توصيلات مرتخية. كما نمدد الخطوط المخصصة التي تحتاجها المكيفات وسخانات الماء والأفران.',
+      ],
+    },
+    problems: {
+      en: [
+        'Breaker or RCD keeps tripping',
+        'Power cut in part of the house',
+        'Burning smell, sparking or hot sockets',
+        'New sockets, switches and light points',
+        'Ceiling fan, light and chandelier installation',
+        'DB board upgrade and dedicated AC lines',
+      ],
+      ar: [
+        'القاطع أو قاطع التسريب يفصل باستمرار',
+        'انقطاع الكهرباء عن جزء من المنزل',
+        'رائحة احتراق أو شرر أو أفياش ساخنة',
+        'تركيب أفياش ومفاتيح ونقاط إنارة جديدة',
+        'تركيب المراوح السقفية والإنارة والثريات',
+        'تحديث لوحة التوزيع وتمديد خطوط مخصصة للمكيفات',
+      ],
+    },
+    includes: {
+      en: [
+        'Safe fault finding with proper test equipment',
+        'Price agreed before work starts',
+        'Quality cables, breakers and fittings',
+        'Testing and written warranty on the work',
+      ],
+      ar: [
+        'تحديد آمن للأعطال بأجهزة قياس مناسبة',
+        'سعر متفق عليه قبل بدء العمل',
+        'كابلات وقواطع وتجهيزات عالية الجودة',
+        'اختبار بعد العمل وضمان مكتوب',
+      ],
+    },
+    faqs: [
+      {
+        q: { en: 'Why does my breaker keep tripping?', ar: 'لماذا يفصل القاطع باستمرار؟' },
+        a: {
+          en: 'Usually an overloaded circuit, a faulty appliance or a wiring fault such as a short or earth leakage. Unplug appliances on that circuit and call us — don’t keep resetting it.',
+          ar: 'غالبًا بسبب حمل زائد على الخط أو جهاز معطل أو عطل في التمديدات مثل تماس أو تسريب أرضي. افصل الأجهزة على ذلك الخط واتصل بنا، ولا تكرر إعادة تشغيله.',
+        },
+      },
+      {
+        q: { en: 'I smell burning from a socket — what should I do?', ar: 'أشم رائحة احتراق من فيش، ماذا أفعل؟' },
+        a: {
+          en: 'Switch off that circuit at the breaker, stop using the socket and call an electrician straight away. Overheating sockets can start fires.',
+          ar: 'افصل ذلك الخط من القاطع، وتوقف عن استخدام الفيش، واتصل بكهربائي فورًا، فالأفياش التي ترتفع حرارتها قد تسبب حريقًا.',
+        },
+      },
+      {
+        q: { en: 'Do you do electrical work for shops and offices?', ar: 'هل تنفذون أعمالًا كهربائية للمحلات والمكاتب؟' },
+        a: {
+          en: 'Yes — lighting, sockets, DB boards and maintenance for shops, offices, restaurants and workshops.',
+          ar: 'نعم، الإنارة والأفياش ولوحات التوزيع والصيانة للمحلات والمكاتب والمطاعم والورش.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'bakery-machine-repair',
+    icon: 'bread',
+    category: 'commercial',
+    name: { en: 'Bakery Machine Repair', ar: 'صيانة معدات المخابز' },
+    title: {
+      en: 'Bakery Machine & Oven Repair in Oman',
+      ar: 'صيانة أفران ومعدات المخابز في عُمان',
+    },
+    short: {
+      en: 'Repair and maintenance of bakery ovens, dough mixers, proofers, sheeters and bread slicers for bakeries and restaurants.',
+      ar: 'إصلاح وصيانة أفران المخابز وعجانات العجين وغرف التخمير وفرادات العجين وقطاعات الخبز للمخابز والمطاعم.',
+    },
+    intro: {
+      en: [
+        'When a bakery oven or mixer stops, production stops. We repair and maintain commercial bakery equipment for bakeries, sweet shops, restaurants, hotels and central kitchens across Oman, with fast call-outs to keep downtime short.',
+        'Our technicians handle the electrical, heating, motor and control faults behind most breakdowns, and planned maintenance helps prevent them before the morning rush.',
+      ],
+      ar: [
+        'عندما يتوقف فرن أو عجّانة المخبز يتوقف الإنتاج. نصلح ونصون معدات المخابز التجارية للمخابز ومحلات الحلويات والمطاعم والفنادق والمطابخ المركزية في عُمان، مع استجابة سريعة لتقليل فترة التوقف.',
+        'يتعامل فنيونا مع الأعطال الكهربائية وأعطال التسخين والمحركات ووحدات التحكم التي تقف وراء معظم الأعطال، وتساعد الصيانة الدورية على تجنبها قبل ذروة الصباح.',
+      ],
+    },
+    problems: {
+      en: [
+        'Deck, rotary or convection oven not heating',
+        'Uneven baking or temperature problems',
+        'Spiral or planetary mixer motor and belt faults',
+        'Proofer not holding heat or humidity',
+        'Dough sheeter, divider or bread slicer faults',
+        'Control panel, timer and thermostat failures',
+      ],
+      ar: [
+        'فرن الطوابق أو الدوار أو الحراري لا يسخن',
+        'خبز غير متساوٍ أو مشاكل في الحرارة',
+        'أعطال محرك أو سير العجانة الحلزونية أو الكوكبية',
+        'غرفة التخمير لا تحافظ على الحرارة أو الرطوبة',
+        'أعطال فرادة العجين أو مقسمة العجين أو قطاعة الخبز',
+        'أعطال لوحة التحكم والمؤقت والثرموستات',
+      ],
+    },
+    includes: {
+      en: [
+        'On-site diagnosis at your bakery',
+        'Clear quote before repair',
+        'Heating elements, motors, belts and controls replaced',
+        'Planned maintenance contracts available',
+      ],
+      ar: [
+        'تشخيص في موقع المخبز',
+        'عرض سعر واضح قبل الإصلاح',
+        'استبدال عناصر التسخين والمحركات والسيور ووحدات التحكم',
+        'تتوفر عقود صيانة دورية',
+      ],
+    },
+    faqs: [
+      {
+        q: { en: 'Which bakery machines do you repair?', ar: 'ما معدات المخابز التي تصلحونها؟' },
+        a: {
+          en: 'Deck, rotary and convection ovens, spiral and planetary mixers, proofers, dough sheeters, dividers and bread slicers.',
+          ar: 'أفران الطوابق والدوارة والحرارية، والعجانات الحلزونية والكوكبية، وغرف التخمير، وفرادات ومقسمات العجين، وقطاعات الخبز.',
+        },
+      },
+      {
+        q: { en: 'Can you come early before the bakery opens?', ar: 'هل يمكنكم الحضور مبكرًا قبل فتح المخبز؟' },
+        a: {
+          en: 'Yes. Tell us your production hours and we will schedule urgent repairs and maintenance around them.',
+          ar: 'نعم، أخبرنا بساعات الإنتاج لديك وسنجدول الإصلاحات العاجلة والصيانة بما يناسبها.',
+        },
+      },
+      {
+        q: { en: 'Do you offer maintenance contracts for bakeries?', ar: 'هل تقدمون عقود صيانة للمخابز؟' },
+        a: {
+          en: 'Yes. Regular servicing of ovens and mixers reduces breakdowns and keeps baking consistent.',
+          ar: 'نعم، الصيانة المنتظمة للأفران والعجانات تقلل الأعطال وتحافظ على جودة الخبز.',
         },
       },
     ],

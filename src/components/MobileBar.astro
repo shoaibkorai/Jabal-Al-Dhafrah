@@ -1,5 +1,5 @@
 ---
-import { contactFor, type Lang } from '../config/site';
+import { site, contactFor, type Lang } from '../config/site';
 import type { CountryCode } from '../data/cities';
 import { t, waLink } from '../i18n/ui';
 import Icon from './Icon.astro';
@@ -7,9 +7,11 @@ interface Props { lang: Lang; country?: CountryCode }
 const { lang, country } = Astro.props;
 const u = t(lang);
 const ct = contactFor(country);
+const btn = 'inline-flex min-h-12 items-center justify-center gap-1.5 rounded-xl px-2 text-sm font-semibold whitespace-nowrap transition-colors';
 ---
-<!-- Always-visible call/WhatsApp bar on phones (thumb reach) -->
-<div class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-2 gap-2 border-t border-slate-200 bg-white/95 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
-  <a href={`tel:${ct.phone}`} class="btn-primary"><Icon name="phone" class="size-5" />{u.call}</a>
-  <a href={waLink(lang, undefined, ct.whatsapp)} class="btn-wa" target="_blank" rel="noopener"><Icon name="whatsapp" class="size-5" />{u.whatsapp}</a>
+<!-- Always-visible Call / WhatsApp / Location bar on phones (thumb reach) -->
+<div class="fixed inset-x-0 bottom-0 z-50 grid grid-cols-3 gap-2 border-t border-slate-200 bg-white/95 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden">
+  <a href={`tel:${ct.phone}`} class={`${btn} bg-accent-500 text-ink hover:bg-accent-400`}><Icon name="phone" class="size-5 shrink-0" />{u.call}</a>
+  <a href={waLink(lang, undefined, ct.whatsapp)} class={`${btn} bg-wa text-white hover:bg-wa-dark`} target="_blank" rel="noopener"><Icon name="whatsapp" class="size-5 shrink-0" />{u.whatsapp}</a>
+  <a href={site.mapsUrl} class={`${btn} bg-brand-600 text-white hover:bg-brand-700`} target="_blank" rel="noopener" aria-label={u.directions}><Icon name="pin" class="size-5 shrink-0" />{u.location}</a>
 </div>

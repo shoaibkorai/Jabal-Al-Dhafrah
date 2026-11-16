@@ -80,7 +80,7 @@ const crumbs = [
           <li><a href={`tel:${site.phone}`} class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="phone" class="size-6 text-brand-600" /><span dir="ltr">{site.phoneDisplay}</span></a></li>
           <li><a href={`tel:${site.phone2}`} class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="phone" class="size-6 text-brand-600" /><span dir="ltr">{site.phone2Display}</span></a></li>
           <li><a href={waLink(lang)} target="_blank" rel="noopener" class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="whatsapp" class="size-6 text-wa" />{u.whatsapp}</a></li>
-          <li class="flex items-center gap-3"><Icon name="pin" class="size-6 text-brand-600" />{site.address.street[lang]}, {site.address.locality[lang]}</li>
+          <li><a href={site.mapsUrl} target="_blank" rel="noopener" class="flex min-h-11 items-center gap-3 font-semibold"><Icon name="pin" class="size-6 text-brand-600" />{u.directions}</a></li>
           <li class="flex items-center gap-3"><Icon name="clock" class="size-6 text-brand-600" />{u.hoursValue}</li>
         </ul>
       )}

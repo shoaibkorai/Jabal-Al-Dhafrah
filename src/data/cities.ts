@@ -1,14 +1,12 @@
 import type { Lang } from '../config/site';
 
 type T = Record<Lang, string>;
-export type CountryCode = 'om' | 'ae' | 'sa';
+export type CountryCode = 'om';
 
 export const countries: Record<CountryCode, { name: T; short: T }> = {
   om: { name: { en: 'Oman', ar: 'سلطنة عُمان' }, short: { en: 'Oman', ar: 'عُمان' } },
-  ae: { name: { en: 'United Arab Emirates', ar: 'الإمارات العربية المتحدة' }, short: { en: 'UAE', ar: 'الإمارات' } },
-  sa: { name: { en: 'Saudi Arabia', ar: 'المملكة العربية السعودية' }, short: { en: 'Saudi Arabia', ar: 'السعودية' } },
 };
-export const countryOrder: CountryCode[] = ['om', 'ae', 'sa'];
+export const countryOrder: CountryCode[] = ['om'];
 
 export interface City {
   slug: string;
@@ -18,6 +16,7 @@ export interface City {
   governorate: T; // governorate / emirate / province
   response: T; // ⚠️ confirm these match your real coverage before launch
   areas: { en: string[]; ar: string[] }; // smaller neighbourhoods listed on this page
+  aka?: string[]; // other English spellings people search for (shown on the page)
   blurb: T;
   geo: { lat: number; lng: number };
 }
@@ -25,7 +24,6 @@ export interface City {
 const MUSCAT_GOV = { en: 'Muscat Governorate', ar: 'محافظة مسقط' };
 const SAME_DAY = { en: 'Same day, usually within 2–4 hours', ar: 'في نفس اليوم، عادة خلال 2 إلى 4 ساعات' };
 const NEXT_DAY = { en: 'Next day or scheduled', ar: 'في اليوم التالي أو حسب الموعد' };
-const DUBAI_EM = { en: 'Emirate of Dubai', ar: 'إمارة دبي' };
 
 export const cities: City[] = [
   // ───────────── OMAN ─────────────
@@ -33,8 +31,8 @@ export const cities: City[] = [
     slug: 'muscat', country: 'om',
     name: { en: 'Muscat', ar: 'مسقط' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: {
-      en: ['Al Wattayah', 'Old Muscat', 'Al Bustan', 'Sidab', 'Wadi Hatat', 'Qantab', 'Yiti', 'Bandar Al Jissah', 'Al Sifah'],
-      ar: ['الوطية', 'مسقط القديمة', 'البستان', 'سداب', 'وادي حطاط', 'قنتب', 'يتي', 'بندر الجصة', 'السيفة'],
+      en: ['Old Muscat', 'Al Bustan', 'Sidab', 'Wadi Hatat', 'Qantab', 'Yiti', 'Bandar Al Jissah', 'Al Sifah'],
+      ar: ['مسقط القديمة', 'البستان', 'سداب', 'وادي حطاط', 'قنتب', 'يتي', 'بندر الجصة', 'السيفة'],
     },
     blurb: {
       en: 'Our main service base. We cover central Muscat daily, from the apartment towers of Ruwi and Qurum to the coastal homes of Al Bustan, Qantab and Yiti.',
@@ -43,7 +41,7 @@ export const cities: City[] = [
     geo: { lat: 23.588, lng: 58.3829 },
   },
   {
-    slug: 'qurum', country: 'om', parent: 'muscat',
+    slug: 'qurum', country: 'om', aka: ['Al Qurum'], parent: 'muscat',
     name: { en: 'Qurum', ar: 'القرم' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Qurum Heights', 'Shatti Al Qurum', 'PDO area', 'Qurum Commercial'], ar: ['مرتفعات القرم', 'شاطئ القرم', 'منطقة PDO', 'القرم التجارية'] },
     blurb: {
@@ -55,7 +53,7 @@ export const cities: City[] = [
   {
     slug: 'ruwi', country: 'om', parent: 'muscat',
     name: { en: 'Ruwi', ar: 'روي' }, governorate: MUSCAT_GOV, response: SAME_DAY,
-    areas: { en: ['Ruwi High Street', 'Hamriyah', 'Al Falaj', 'Mumtaz Area', 'CBD'], ar: ['شارع روي التجاري', 'الحمرية', 'الفلج', 'منطقة الممتاز', 'الحي التجاري'] },
+    areas: { en: ['Ruwi High Street', 'Al Falaj', 'Mumtaz Area', 'CBD'], ar: ['شارع روي التجاري', 'الفلج', 'منطقة الممتاز', 'الحي التجاري'] },
     blurb: {
       en: 'Ruwi is dense with apartment buildings, shops and offices. We regularly service window and split ACs in older blocks, plus fridges and chillers for local shops.',
       ar: 'روي منطقة مكتظة بالمباني السكنية والمحلات والمكاتب، ونخدم فيها باستمرار مكيفات الشباك والسبليت في المباني القديمة إضافة إلى ثلاجات المحلات.',
@@ -63,7 +61,7 @@ export const cities: City[] = [
     geo: { lat: 23.598, lng: 58.545 },
   },
   {
-    slug: 'mutrah', country: 'om', parent: 'muscat',
+    slug: 'mutrah', country: 'om', aka: ['Muttrah', 'Matrah'], parent: 'muscat',
     name: { en: 'Mutrah', ar: 'مطرح' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Mutrah Corniche', 'Mutrah Souq', 'Riyam', 'Al Bustan Road'], ar: ['كورنيش مطرح', 'سوق مطرح', 'ريام', 'طريق البستان'] },
     blurb: {
@@ -93,7 +91,27 @@ export const cities: City[] = [
     geo: { lat: 23.585, lng: 58.565 },
   },
   {
-    slug: 'bawshar', country: 'om',
+    slug: 'al-wutayyah', country: 'om', parent: 'muscat', aka: ['Al Wattayah', 'Wattayah', 'Al Wattaya'],
+    name: { en: 'Al Wutayyah', ar: 'الوطية' }, governorate: MUSCAT_GOV, response: SAME_DAY,
+    areas: { en: ['Wutayyah car showrooms', 'Wutayyah Heights', 'Al Wutayyah residential'], ar: ['معارض السيارات بالوطية', 'مرتفعات الوطية', 'الوطية السكنية'] },
+    blurb: {
+      en: 'Between Qurum and Ruwi, Al Wutayyah mixes car showrooms and offices with apartment blocks and family homes. We repair ACs and appliances for both residents and businesses here.',
+      ar: 'تقع الوطية بين القرم وروي، وتجمع بين معارض السيارات والمكاتب والمباني السكنية والمنازل العائلية، ونصلح المكيفات والأجهزة للسكان والشركات على حد سواء.',
+    },
+    geo: { lat: 23.594, lng: 58.512 },
+  },
+  {
+    slug: 'al-hamriya', country: 'om', parent: 'muscat', aka: ['Hamriyah', 'Al Hamriyah', 'Hamriya'],
+    name: { en: 'Al Hamriya', ar: 'الحمرية' }, governorate: MUSCAT_GOV, response: SAME_DAY,
+    areas: { en: ['Hamriya roundabout', 'Hamriya souq area', 'Wadi Kabir road'], ar: ['دوار الحمرية', 'منطقة سوق الحمرية', 'طريق وادي الكبير'] },
+    blurb: {
+      en: 'One of Muscat’s older neighbourhoods, Al Hamriya has many low-rise flats and small shops. Window ACs, split units and shop fridges here often need quick, affordable repairs.',
+      ar: 'الحمرية من أقدم أحياء مسقط، وتضم الكثير من الشقق المنخفضة والمحلات الصغيرة، وغالبًا ما تحتاج مكيفات الشباك والسبليت وثلاجات المحلات فيها إلى إصلاحات سريعة واقتصادية.',
+    },
+    geo: { lat: 23.611, lng: 58.556 },
+  },
+  {
+    slug: 'bawshar', country: 'om', aka: ['Bosher', 'Bowsher', 'Bausher'],
     name: { en: 'Bawshar', ar: 'بوشر' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Bawshar town', 'Al Misfah', 'Muscat Hills', 'Al Sarooj'], ar: ['بوشر', 'المسفاة', 'مسقط هيلز', 'الصاروج'] },
     blurb: {
@@ -105,7 +123,7 @@ export const cities: City[] = [
   {
     slug: 'al-khuwair', country: 'om', parent: 'bawshar',
     name: { en: 'Al Khuwair', ar: 'الخوير' }, governorate: MUSCAT_GOV, response: SAME_DAY,
-    areas: { en: ['Al Khuwair 33', 'Al Khuwair South', 'Ministries District'], ar: ['الخوير 33', 'الخوير الجنوبية', 'منطقة الوزارات'] },
+    areas: { en: ['Al Khuwair 33', 'Al Khuwair South', 'Ministries District', 'Sultan Qaboos Street area'], ar: ['الخوير 33', 'الخوير الجنوبية', 'منطقة الوزارات', 'منطقة شارع السلطان قابوس'] },
     blurb: {
       en: 'Al Khuwair’s mid-rise apartments and offices run their ACs almost all year. We handle quick repairs for tenants and planned maintenance for building managers.',
       ar: 'تشغّل الشقق والمكاتب في الخوير مكيفاتها طوال العام تقريبًا، ونقدم إصلاحات سريعة للمستأجرين وصيانة مجدولة لمديري المباني.',
@@ -113,7 +131,7 @@ export const cities: City[] = [
     geo: { lat: 23.594, lng: 58.427 },
   },
   {
-    slug: 'al-ghubrah', country: 'om', parent: 'bawshar',
+    slug: 'al-ghubrah', country: 'om', aka: ['Ghubra', 'Al Ghubra'], parent: 'bawshar',
     name: { en: 'Al Ghubrah', ar: 'الغبرة' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Ghubrah North', 'Ghubrah South', 'Bowshar Road'], ar: ['الغبرة الشمالية', 'الغبرة الجنوبية', 'طريق بوشر'] },
     blurb: {
@@ -123,7 +141,7 @@ export const cities: City[] = [
     geo: { lat: 23.592, lng: 58.392 },
   },
   {
-    slug: 'azaiba', country: 'om', parent: 'bawshar',
+    slug: 'azaiba', country: 'om', aka: ['Al Azaiba', 'Al Azaibah', 'Al Udhaybah'], parent: 'bawshar',
     name: { en: 'Azaiba', ar: 'العذيبة' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Azaiba North', 'Azaiba South', 'Al Ehsan Street', 'Al Mazoon Street'], ar: ['العذيبة الشمالية', 'العذيبة الجنوبية', 'شارع الإحسان', 'شارع المزون'] },
     blurb: {
@@ -163,9 +181,19 @@ export const cities: City[] = [
     geo: { lat: 23.57, lng: 58.385 },
   },
   {
-    slug: 'seeb', country: 'om',
+    slug: 'madinat-al-irfan', country: 'om', parent: 'bawshar', aka: ['Irfan City', 'Madinat Al Irfan'],
+    name: { en: 'Madinat Al Irfan', ar: 'مدينة العرفان' }, governorate: MUSCAT_GOV, response: SAME_DAY,
+    areas: { en: ['Convention Centre area', 'Al Irfan residential', 'Al Irfan offices'], ar: ['منطقة مركز المعارض', 'العرفان السكنية', 'مكاتب العرفان'] },
+    blurb: {
+      en: 'Madinat Al Irfan is a new district near the airport and the convention centre, with modern homes, offices and hotels. We handle installation and servicing for new AC systems and appliances.',
+      ar: 'مدينة العرفان حي جديد قرب المطار ومركز عُمان للمؤتمرات والمعارض، ويضم منازل ومكاتب وفنادق حديثة، ونتولى تركيب وصيانة أنظمة التكييف والأجهزة الجديدة.',
+    },
+    geo: { lat: 23.583, lng: 58.316 },
+  },
+  {
+    slug: 'seeb', country: 'om', aka: ['Al Seeb', 'As Seeb'],
     name: { en: 'Seeb', ar: 'السيب' }, governorate: MUSCAT_GOV, response: SAME_DAY,
-    areas: { en: ['Al Rusayl', 'Seeb Souq', 'Airport Heights', 'Sultan Haitham City', 'Al Jifnain'], ar: ['الرسيل', 'سوق السيب', 'مرتفعات المطار', 'مدينة السلطان هيثم', 'الجفنين'] },
+    areas: { en: ['Seeb Souq', 'Airport Heights', 'Sultan Haitham City', 'Al Jifnain', 'Al Maardih', 'Al Naseem'], ar: ['سوق السيب', 'مرتفعات المطار', 'مدينة السلطان هيثم', 'الجفنين', 'المعارض', 'النسيم'] },
     blurb: {
       en: 'Seeb is the largest wilayat by population, with fast-growing neighbourhoods like Al Mabela, Al Khoud and Mawaleh. We keep technicians stationed nearby for quick visits.',
       ar: 'السيب هي أكبر ولاية من حيث عدد السكان، وتضم أحياء سريعة النمو مثل المعبيلة والخوض والموالح، ولدينا فنيون متمركزون بالقرب منها للزيارات السريعة.',
@@ -185,7 +213,7 @@ export const cities: City[] = [
   {
     slug: 'al-hail', country: 'om', parent: 'seeb',
     name: { en: 'Al Hail', ar: 'الحيل' }, governorate: MUSCAT_GOV, response: SAME_DAY,
-    areas: { en: ['Al Hail North', 'Al Hail South', 'Al Hail Street'], ar: ['الحيل الشمالية', 'الحيل الجنوبية', 'شارع الحيل'] },
+    areas: { en: ['Al Hail North', 'Al Hail South', 'Al Hail Street', 'Al Hail Industrial Area'], ar: ['الحيل الشمالية', 'الحيل الجنوبية', 'شارع الحيل', 'منطقة الحيل الصناعية'] },
     blurb: {
       en: 'Al Hail North and South are mostly family villas. Washing machines, fridges and AC units all see heavy use here, and we cover every block of both areas.',
       ar: 'الحيل الشمالية والجنوبية مناطق تغلب عليها الفلل العائلية، وتُستخدم فيها الغسالات والثلاجات والمكيفات بكثافة، ونغطي جميع أحيائها.',
@@ -203,9 +231,9 @@ export const cities: City[] = [
     geo: { lat: 23.616, lng: 58.243 },
   },
   {
-    slug: 'al-khoud', country: 'om', parent: 'seeb',
+    slug: 'al-khoud', country: 'om', aka: ['Al Khoudh', 'Al Khod'], parent: 'seeb',
     name: { en: 'Al Khoud', ar: 'الخوض' }, governorate: MUSCAT_GOV, response: SAME_DAY,
-    areas: { en: ['Al Khoud Street', 'Al Khoud 6', 'University area', 'Old Al Khoud'], ar: ['شارع الخوض', 'الخوض 6', 'منطقة الجامعة', 'الخوض القديمة'] },
+    areas: { en: ['Al Khoud Street', 'Al Khoud 6', 'Al Khoud 7', 'Al Khoud 8', 'University area', 'Old Al Khoud'], ar: ['شارع الخوض', 'الخوض 6', 'الخوض 7', 'الخوض 8', 'منطقة الجامعة', 'الخوض القديمة'] },
     blurb: {
       en: 'With Sultan Qaboos University nearby, Al Khoud has many shared flats and student homes. We offer fast, budget-friendly fixes for ACs, fridges and washers.',
       ar: 'بوجود جامعة السلطان قابوس بالقرب، تضم الخوض الكثير من الشقق المشتركة وسكن الطلاب، ونقدم إصلاحات سريعة واقتصادية للمكيفات والثلاجات والغسالات.',
@@ -213,7 +241,7 @@ export const cities: City[] = [
     geo: { lat: 23.6, lng: 58.17 },
   },
   {
-    slug: 'al-maabilah', country: 'om', parent: 'seeb',
+    slug: 'al-maabilah', country: 'om', aka: ['Al Mabela', 'Maabela', 'Al Mabelah'], parent: 'seeb',
     name: { en: 'Al Maabilah', ar: 'المعبيلة' }, governorate: MUSCAT_GOV, response: SAME_DAY,
     areas: { en: ['Maabilah North', 'Maabilah South', 'Maabilah Industrial'], ar: ['المعبيلة الشمالية', 'المعبيلة الجنوبية', 'المعبيلة الصناعية'] },
     blurb: {
@@ -223,7 +251,17 @@ export const cities: City[] = [
     geo: { lat: 23.66, lng: 58.13 },
   },
   {
-    slug: 'al-amerat', country: 'om',
+    slug: 'al-rusayl', country: 'om', parent: 'seeb', aka: ['Rusayl', 'Al Rusail'],
+    name: { en: 'Al Rusayl', ar: 'الرسيل' }, governorate: MUSCAT_GOV, response: SAME_DAY,
+    areas: { en: ['Rusayl Industrial Estate', 'Rusayl residential', 'Rusayl staff housing'], ar: ['منطقة الرسيل الصناعية', 'الرسيل السكنية', 'سكن موظفي الرسيل'] },
+    blurb: {
+      en: 'Al Rusayl combines a large industrial estate with residential streets. We service ACs in factories, offices and staff housing, as well as appliances in family homes.',
+      ar: 'تجمع الرسيل بين منطقة صناعية كبيرة وأحياء سكنية، ونصون المكيفات في المصانع والمكاتب وسكن الموظفين، إضافة إلى الأجهزة في المنازل العائلية.',
+    },
+    geo: { lat: 23.555, lng: 58.19 },
+  },
+  {
+    slug: 'al-amerat', country: 'om', aka: ['Al Amarat', 'Amerat'],
     name: { en: 'Al Amerat', ar: 'العامرات' }, governorate: MUSCAT_GOV, response: { en: 'Same day', ar: 'في نفس اليوم' },
     areas: { en: ['Al Amerat town', 'Al Nahdha', 'Al Amerat Heights'], ar: ['مدينة العامرات', 'النهضة', 'مرتفعات العامرات'] },
     blurb: {
@@ -251,6 +289,16 @@ export const cities: City[] = [
       ar: 'تقع بركاء غرب السيب مباشرة وعلى مسافة قريبة من فريقنا في مسقط، لذلك تتم معظم الزيارات في نفس اليوم.',
     },
     geo: { lat: 23.6787, lng: 57.8858 },
+  },
+  {
+    slug: 'al-khaboura', country: 'om', aka: ['Khaboura', 'Al Khabourah'],
+    name: { en: 'Al Khaboura', ar: 'الخابورة' }, governorate: { en: 'North Al Batinah', ar: 'محافظة شمال الباطنة' }, response: { en: 'Scheduled visits', ar: 'زيارات حسب الموعد' },
+    areas: { en: ['Al Khaboura town', 'Al Khaboura coast', 'Al Khaboura villages'], ar: ['مدينة الخابورة', 'ساحل الخابورة', 'قرى الخابورة'] },
+    blurb: {
+      en: 'We visit Al Khaboura on scheduled service days for AC repair, cleaning and appliance work in homes, farms and shops along the Batinah coast.',
+      ar: 'نزور الخابورة في أيام خدمة مجدولة لإصلاح وتنظيف المكيفات وصيانة الأجهزة في المنازل والمزارع والمحلات على ساحل الباطنة.',
+    },
+    geo: { lat: 23.971, lng: 57.094 },
   },
   {
     slug: 'sohar', country: 'om',
@@ -291,162 +339,6 @@ export const cities: City[] = [
       ar: 'الرطوبة العالية خلال موسم الخريف تعني مشاكل أكثر في العفن والتصريف في المكيفات والثلاجات، لذا احجز مسبقًا للخدمة المجدولة في صلالة.',
     },
     geo: { lat: 17.0151, lng: 54.0924 },
-  },
-
-  // ───────────── UAE ─────────────
-  {
-    slug: 'dubai', country: 'ae',
-    name: { en: 'Dubai', ar: 'دبي' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: {
-      en: ['Al Karama', 'Al Satwa', 'Al Nahda', 'Muhaisnah', 'Al Quoz', 'Jebel Ali', 'Dubai Silicon Oasis', 'Arabian Ranches', 'Al Warqa', 'International City'],
-      ar: ['الكرامة', 'السطوة', 'النهدة', 'محيصنة', 'القوز', 'جبل علي', 'واحة دبي للسيليكون', 'المرابع العربية', 'الورقاء', 'المدينة العالمية'],
-    },
-    blurb: {
-      en: 'From high-rise towers to townhouse communities, Dubai homes depend on AC almost all year. We repair split and ducted systems and all major home appliances across the city.',
-      ar: 'من الأبراج الشاهقة إلى مجمعات التاون هاوس، تعتمد منازل دبي على المكيفات طوال العام تقريبًا. نصلح أنظمة السبليت والدكت وجميع الأجهزة المنزلية الرئيسية في أنحاء المدينة.',
-    },
-    geo: { lat: 25.2048, lng: 55.2708 },
-  },
-  {
-    slug: 'deira', country: 'ae', parent: 'dubai',
-    name: { en: 'Deira', ar: 'ديرة' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Al Rigga', 'Al Muraqqabat', 'Port Saeed', 'Al Garhoud', 'Hor Al Anz', 'Abu Hail'], ar: ['الرقة', 'المرقبات', 'بورسعيد', 'القرهود', 'هور العنز', 'أبو هيل'] },
-    blurb: {
-      en: 'Deira’s older apartment blocks and busy shops keep window ACs, split units and commercial fridges working hard. We handle both home and shop repairs here.',
-      ar: 'تُرهق المباني السكنية القديمة والمحلات المزدحمة في ديرة مكيفات الشباك والسبليت والثلاجات التجارية، ونتولى إصلاحات المنازل والمحلات معًا.',
-    },
-    geo: { lat: 25.27, lng: 55.32 },
-  },
-  {
-    slug: 'bur-dubai', country: 'ae', parent: 'dubai',
-    name: { en: 'Bur Dubai', ar: 'بر دبي' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Al Mankhool', 'Al Raffa', 'Al Fahidi', 'Oud Metha', 'Al Jafiliya'], ar: ['المنخول', 'الرفاعة', 'الفهيدي', 'عود ميثاء', 'الجافلية'] },
-    blurb: {
-      en: 'Bur Dubai has many family apartments in mid-rise buildings. AC cleaning, washing machine repairs and fridge gas recharges are the jobs we do most here.',
-      ar: 'يضم بر دبي الكثير من الشقق العائلية في مبانٍ متوسطة الارتفاع، وتنظيف المكيفات وإصلاح الغسالات وشحن غاز الثلاجات هي أكثر الأعمال التي ننفذها هنا.',
-    },
-    geo: { lat: 25.255, lng: 55.297 },
-  },
-  {
-    slug: 'jumeirah', country: 'ae', parent: 'dubai',
-    name: { en: 'Jumeirah', ar: 'جميرا' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Jumeirah 1', 'Jumeirah 2', 'Jumeirah 3', 'Umm Suqeim', 'Al Safa', 'Al Wasl', 'La Mer'], ar: ['جميرا 1', 'جميرا 2', 'جميرا 3', 'أم سقيم', 'الصفا', 'الوصل', 'لامير'] },
-    blurb: {
-      en: 'Jumeirah’s beachside villas often combine ducted central AC with split units and built-in kitchens. Our technicians handle every system type in one visit.',
-      ar: 'تجمع فلل جميرا الشاطئية غالبًا بين التكييف المركزي بالدكت ووحدات السبليت والمطابخ المدمجة، ويتعامل فنيونا مع جميع الأنظمة في زيارة واحدة.',
-    },
-    geo: { lat: 25.2, lng: 55.24 },
-  },
-  {
-    slug: 'al-barsha', country: 'ae', parent: 'dubai',
-    name: { en: 'Al Barsha', ar: 'البرشاء' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Al Barsha 1', 'Al Barsha 2', 'Al Barsha 3', 'Al Barsha South', 'Al Sufouh'], ar: ['البرشاء 1', 'البرشاء 2', 'البرشاء 3', 'البرشاء جنوب', 'الصفوح'] },
-    blurb: {
-      en: 'Al Barsha mixes villas and apartment buildings close to Mall of the Emirates. We repair ACs and appliances for families, landlords and property managers here.',
-      ar: 'يجمع البرشاء بين الفلل والمباني السكنية بالقرب من مول الإمارات، ونصلح المكيفات والأجهزة للعائلات والملاك ومديري العقارات هنا.',
-    },
-    geo: { lat: 25.11, lng: 55.2 },
-  },
-  {
-    slug: 'dubai-marina', country: 'ae', parent: 'dubai',
-    name: { en: 'Dubai Marina', ar: 'دبي مارينا' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['JBR', 'Jumeirah Lakes Towers', 'Bluewaters', 'Dubai Media City'], ar: ['جي بي آر', 'أبراج بحيرات جميرا', 'بلوواترز', 'مدينة دبي للإعلام'] },
-    blurb: {
-      en: 'Marina and JLT towers mostly use fan-coil units on chilled water. We service fan coils, thermostats and drain lines, plus all apartment appliances.',
-      ar: 'تعتمد أبراج المارينا وأبراج بحيرات جميرا غالبًا على وحدات الفان كويل بالمياه المبردة، ونصون الفان كويل والثرموستات وخطوط التصريف إضافة إلى أجهزة الشقق.',
-    },
-    geo: { lat: 25.08, lng: 55.14 },
-  },
-  {
-    slug: 'business-bay', country: 'ae', parent: 'dubai',
-    name: { en: 'Business Bay', ar: 'الخليج التجاري' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Downtown Dubai', 'DIFC', 'Al Jaddaf', 'Meydan', 'City Walk'], ar: ['وسط مدينة دبي', 'مركز دبي المالي العالمي', 'الجداف', 'ميدان', 'سيتي ووك'] },
-    blurb: {
-      en: 'Business Bay and Downtown are full of new towers with modern appliances. We repair fan coils, dishwashers, washer-dryers and built-in ovens in apartments and offices.',
-      ar: 'يمتلئ الخليج التجاري ووسط المدينة بالأبراج الحديثة وأجهزتها العصرية، ونصلح الفان كويل وغسالات الصحون والغسالات المجففة والأفران المدمجة في الشقق والمكاتب.',
-    },
-    geo: { lat: 25.185, lng: 55.27 },
-  },
-  {
-    slug: 'al-qusais', country: 'ae', parent: 'dubai',
-    name: { en: 'Al Qusais', ar: 'القصيص' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Al Qusais 1', 'Al Qusais 2', 'Al Qusais Industrial', 'Al Twar', 'Al Nahda 1'], ar: ['القصيص 1', 'القصيص 2', 'القصيص الصناعية', 'الطوار', 'النهدة 1'] },
-    blurb: {
-      en: 'Al Qusais has a mix of family flats, villas in Al Twar and an industrial zone. We cover home repairs and AC servicing for warehouses and staff housing.',
-      ar: 'يضم القصيص مزيجًا من الشقق العائلية والفلل في الطوار ومنطقة صناعية، ونغطي إصلاحات المنازل وصيانة مكيفات المستودعات وسكن الموظفين.',
-    },
-    geo: { lat: 25.28, lng: 55.38 },
-  },
-  {
-    slug: 'mirdif', country: 'ae', parent: 'dubai',
-    name: { en: 'Mirdif', ar: 'مردف' }, governorate: DUBAI_EM, response: NEXT_DAY,
-    areas: { en: ['Uptown Mirdif', 'Al Mizhar', 'Al Khawaneej', 'Mushrif', 'Al Warqa'], ar: ['أبتاون مردف', 'المزهر', 'الخوانيج', 'مشرف', 'الورقاء'] },
-    blurb: {
-      en: 'Mirdif and nearby Al Mizhar and Al Khawaneej are villa neighbourhoods with large families, so washing machines, fridges and multiple ACs get heavy daily use.',
-      ar: 'مردف والمزهر والخوانيج القريبة أحياء فلل لعائلات كبيرة، لذا تُستخدم الغسالات والثلاجات والمكيفات المتعددة بكثافة يوميًا.',
-    },
-    geo: { lat: 25.22, lng: 55.42 },
-  },
-  {
-    slug: 'sharjah', country: 'ae',
-    name: { en: 'Sharjah', ar: 'الشارقة' }, governorate: { en: 'Emirate of Sharjah', ar: 'إمارة الشارقة' }, response: NEXT_DAY,
-    areas: {
-      en: ['Al Majaz', 'Al Nahda', 'Al Taawun', 'Al Khan', 'Al Qasimia', 'Muwaileh', 'Al Butina', 'Abu Shagara'],
-      ar: ['المجاز', 'النهدة', 'التعاون', 'الخان', 'القاسمية', 'مويلح', 'البطينة', 'أبو شغارة'],
-    },
-    blurb: {
-      en: 'Sharjah’s large family apartments and villa suburbs need dependable AC and appliance repair. We cover the city centre, the lagoon districts and Muwaileh.',
-      ar: 'تحتاج الشقق العائلية الكبيرة وضواحي الفلل في الشارقة إلى صيانة موثوقة للمكيفات والأجهزة، ونغطي وسط المدينة ومناطق البحيرات ومويلح.',
-    },
-    geo: { lat: 25.3463, lng: 55.4209 },
-  },
-  {
-    slug: 'ajman', country: 'ae',
-    name: { en: 'Ajman', ar: 'عجمان' }, governorate: { en: 'Emirate of Ajman', ar: 'إمارة عجمان' }, response: NEXT_DAY,
-    areas: { en: ['Al Nuaimia', 'Al Rashidiya', 'Al Jurf', 'Al Rawda', 'Al Mowaihat', 'Umm Al Quwain (nearby)'], ar: ['النعيمية', 'الراشدية', 'الجرف', 'الروضة', 'المويهات', 'أم القيوين (قريبًا منها)'] },
-    blurb: {
-      en: 'We serve apartments in Al Nuaimia and Al Rashidiya, villas in Al Rawda and Al Mowaihat, and visit Umm Al Quwain by appointment.',
-      ar: 'نخدم الشقق في النعيمية والراشدية والفلل في الروضة والمويهات، ونزور أم القيوين حسب الموعد.',
-    },
-    geo: { lat: 25.4052, lng: 55.5136 },
-  },
-  {
-    slug: 'al-ain', country: 'ae',
-    name: { en: 'Al Ain', ar: 'العين' }, governorate: { en: 'Emirate of Abu Dhabi', ar: 'إمارة أبوظبي' }, response: { en: 'Scheduled visits', ar: 'زيارات حسب الموعد' },
-    areas: { en: ['Al Jimi', 'Al Muwaiji', 'Al Towayya', 'Al Mutawaa', 'Hili'], ar: ['الجيمي', 'المويجعي', 'الطوية', 'المطوع', 'هيلي'] },
-    blurb: {
-      en: 'Al Ain’s dry inland heat puts heavy load on ACs. We run scheduled service days for villas and homes across the city.',
-      ar: 'تفرض حرارة العين الجافة حملًا كبيرًا على المكيفات، ونخصص أيام خدمة مجدولة للفلل والمنازل في أنحاء المدينة.',
-    },
-    geo: { lat: 24.2075, lng: 55.7447 },
-  },
-
-  // ───────────── SAUDI ARABIA ─────────────
-  {
-    slug: 'riyadh', country: 'sa',
-    name: { en: 'Riyadh', ar: 'الرياض' }, governorate: { en: 'Riyadh Province', ar: 'منطقة الرياض' }, response: NEXT_DAY,
-    areas: {
-      en: ['Al Olaya', 'Al Malaz', 'Al Sulimaniyah', 'Al Yasmin', 'Al Nakheel', 'Al Naseem', 'Al Rawdah', 'Al Sahafa'],
-      ar: ['العليا', 'الملز', 'السليمانية', 'الياسمين', 'النخيل', 'النسيم', 'الروضة', 'الصحافة'],
-    },
-    blurb: {
-      en: 'Riyadh summers regularly pass 45°C, so a broken AC is an emergency. We repair split, window and central systems plus home appliances across the city.',
-      ar: 'تتجاوز حرارة صيف الرياض 45 درجة مئوية بانتظام، لذلك يعد تعطل المكيف حالة طارئة. نصلح أنظمة السبليت والشباك والمركزي والأجهزة المنزلية في أنحاء المدينة.',
-    },
-    geo: { lat: 24.7136, lng: 46.6753 },
-  },
-  {
-    slug: 'jeddah', country: 'sa',
-    name: { en: 'Jeddah', ar: 'جدة' }, governorate: { en: 'Makkah Province', ar: 'منطقة مكة المكرمة' }, response: NEXT_DAY,
-    areas: {
-      en: ['Al Rawdah', 'Al Safa', 'Al Hamra', 'Al Salamah', 'Al Naeem', 'Obhur', 'Al Zahra', 'Al Shati'],
-      ar: ['الروضة', 'الصفا', 'الحمراء', 'السلامة', 'النعيم', 'أبحر', 'الزهراء', 'الشاطئ'],
-    },
-    blurb: {
-      en: 'Jeddah’s coastal humidity causes AC drainage leaks, mould and corrosion. Our visits include drain flushing and coil treatment along with the repair.',
-      ar: 'تسبب رطوبة جدة الساحلية تسريبات تصريف المكيفات والعفن والتآكل، وتشمل زياراتنا تسليك التصريف ومعالجة الملفات مع الإصلاح.',
-    },
-    geo: { lat: 21.4858, lng: 39.1925 },
   },
 ];
 

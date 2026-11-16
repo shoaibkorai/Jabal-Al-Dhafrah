@@ -10,7 +10,7 @@ export function business(lang: Lang) {
   const days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
   return {
     '@context': 'https://schema.org',
-    '@type': ['HVACBusiness', 'HomeAndConstructionBusiness'],
+    '@type': ['HVACBusiness', 'Electrician', 'HomeAndConstructionBusiness'],
     '@id': BUSINESS_ID,
     name: site.name[lang],
     alternateName: [site.name[lang === 'en' ? 'ar' : 'en'], site.legalName[lang === 'en' ? 'ar' : 'en']],
@@ -34,6 +34,7 @@ export function business(lang: Lang) {
       addressCountry: site.address.country,
     },
     geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+    hasMap: `https://www.google.com/maps?q=${site.geo.lat},${site.geo.lng}`,
     openingHoursSpecification: [
       { '@type': 'OpeningHoursSpecification', dayOfWeek: days, opens: site.hours.opens, closes: site.hours.closes },
     ],
