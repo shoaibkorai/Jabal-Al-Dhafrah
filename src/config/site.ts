@@ -3,7 +3,7 @@
 //  Every page, schema tag, button and footer reads from here.
 // ─────────────────────────────────────────────────────────────
 export const site = {
-  url: 'https://www.example.om', // ⚠️ final domain, no trailing slash
+  url: 'https://main.d1aiker9zrpvd2.amplifyapp.com', // ⚠️ switch to your custom domain when it's connected
   name: { en: 'Jabal Al Dhafrah', ar: 'جبال الظفرة' },
   // Registered name exactly as on the Commercial Registration
   legalName: { en: 'Jabal Al Dhafrah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
@@ -17,7 +17,7 @@ export const site = {
   whatsapp: '96897854050', // ⚠️ confirm this number has WhatsApp
   phone2: '+96878764050',
   phone2Display: '+968 7876 4050',
-  email: 'info@example.om', // ⚠️ real email
+  email: '', // ⚠️ add the real business email; leave empty to hide it everywhere
   address: {
     street: { en: 'P.O. Box 119', ar: 'ص.ب 119' },
     poBox: '119',

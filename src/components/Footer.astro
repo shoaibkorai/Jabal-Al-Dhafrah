@@ -36,7 +36,7 @@ const u = t(lang);
       <ul class="mt-3 space-y-2 text-sm">
         <li><a class="hover:text-white" href={`tel:${site.phone}`} dir="ltr">{site.phoneDisplay}</a></li>
         <li><a class="hover:text-white" href={`tel:${site.phone2}`} dir="ltr">{site.phone2Display}</a></li>
-        <li><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></li>
+        {site.email && <li><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></li>}
         <li><a class="hover:text-white" href={site.mapsUrl} target="_blank" rel="noopener">📍 {u.directions}</a></li>
       </ul>
     </div>

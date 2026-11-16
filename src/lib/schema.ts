@@ -20,7 +20,7 @@ export function business(lang: Lang) {
     description: site.tagline[lang],
     url: abs(href(lang, '/')),
     telephone: site.phone,
-    email: site.email,
+    ...(site.email && { email: site.email }),
     image: abs('/og.png'),
     logo: abs('/logo.svg'),
     priceRange: '$$',
