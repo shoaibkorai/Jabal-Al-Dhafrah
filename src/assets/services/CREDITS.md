@@ -16,3 +16,5 @@ keep the same file names.
 | electrical-works.jpg | https://www.pexels.com/photo/a-man-is-working-on-an-electrical-panel-27928762/ |
 | bakery-machine-repair.jpg | https://www.pexels.com/photo/dough-on-metal-tray-6291407/ |
 | water-heater-repair.jpg | https://www.pexels.com/photo/white-washing-machine-in-the-bathroom-8142983/ (cropped to the heater) |
+| plumbing.jpg | https://www.pexels.com/photo/plumber-installs-pipe-fittings-6419128/ |
+| kitchen-hood-repair.jpg | https://www.pexels.com/photo/stainless-steel-cooking-pots-on-stove-11179240/ |

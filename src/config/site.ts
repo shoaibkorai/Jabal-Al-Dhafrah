@@ -29,7 +29,7 @@ export const site = {
   geo: { lat: 23.4860442, lng: 58.5012148 }, // shop location (from Google Maps pin)
   // Opens Google Maps navigation to the shop (app on phones, website on desktop)
   mapsUrl: 'https://www.google.com/maps/dir/?api=1&destination=23.4860442,58.5012148',
-  hours: { opens: '07:00', closes: '23:00', days: 'Sa-Th' as const },
+  hours: { opens: '00:00', closes: '23:59' }, // open 24/7, all 7 days
   foundedYear: 2026,
   // Add profile URLs as they go live (Google Business Profile, Instagram, …)
   sameAs: [] as string[],

@@ -7,10 +7,10 @@ const abs = (p: string) => new URL(p, site.url).href;
 export const BUSINESS_ID = `${site.url}/#business`;
 
 export function business(lang: Lang) {
-  const days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'];
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; // 24/7
   return {
     '@context': 'https://schema.org',
-    '@type': ['HVACBusiness', 'Electrician', 'HomeAndConstructionBusiness'],
+    '@type': ['HVACBusiness', 'Electrician', 'Plumber', 'HomeAndConstructionBusiness'],
     '@id': BUSINESS_ID,
     name: site.name[lang],
     alternateName: [site.name[lang === 'en' ? 'ar' : 'en'], site.legalName[lang === 'en' ? 'ar' : 'en']],

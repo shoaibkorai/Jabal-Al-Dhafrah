@@ -301,26 +301,6 @@ export const cities: City[] = [
     geo: { lat: 23.971, lng: 57.094 },
   },
   {
-    slug: 'sohar', country: 'om',
-    name: { en: 'Sohar', ar: 'صحار' }, governorate: { en: 'North Al Batinah', ar: 'محافظة شمال الباطنة' }, response: { en: 'Same or next day', ar: 'في نفس اليوم أو اليوم التالي' },
-    areas: { en: ['Sohar city', 'Falaj Al Qabail', 'Al Tareef', 'Sohar Industrial Area'], ar: ['مدينة صحار', 'فلج القبائل', 'الطريف', 'منطقة صحار الصناعية'] },
-    blurb: {
-      en: 'We cover Sohar homes as well as offices and staff accommodation near the port and industrial area.',
-      ar: 'نغطي المنازل في صحار إضافة إلى المكاتب وسكن الموظفين قرب الميناء والمنطقة الصناعية.',
-    },
-    geo: { lat: 24.3474, lng: 56.7299 },
-  },
-  {
-    slug: 'nizwa', country: 'om',
-    name: { en: 'Nizwa', ar: 'نزوى' }, governorate: { en: 'Ad Dakhiliyah', ar: 'محافظة الداخلية' }, response: NEXT_DAY,
-    areas: { en: ['Nizwa city', 'Firq', 'Birkat Al Mouz', 'Karsha'], ar: ['مدينة نزوى', 'فرق', 'بركة الموز', 'كرشا'] },
-    blurb: {
-      en: 'Nizwa’s hot inland summers make AC maintenance essential. We run regular service days for homes and businesses in the city and nearby villages.',
-      ar: 'صيف نزوى الحار في الداخل يجعل صيانة المكيفات ضرورية، ونخصص أيام خدمة منتظمة للمنازل والشركات في المدينة والقرى القريبة.',
-    },
-    geo: { lat: 22.9333, lng: 57.5333 },
-  },
-  {
     slug: 'sur', country: 'om',
     name: { en: 'Sur', ar: 'صور' }, governorate: { en: 'South Ash Sharqiyah', ar: 'محافظة جنوب الشرقية' }, response: NEXT_DAY,
     areas: { en: ['Sur city', 'Al Ayjah', 'Ras Al Hadd'], ar: ['مدينة صور', 'العيجة', 'رأس الحد'] },
@@ -329,16 +309,6 @@ export const cities: City[] = [
       ar: 'الهواء الساحلي المالح يسرّع تآكل الوحدات الخارجية للمكيفات في صور، لذلك تشمل زياراتنا تنظيف الملفات وفحص التآكل.',
     },
     geo: { lat: 22.5667, lng: 59.5289 },
-  },
-  {
-    slug: 'salalah', country: 'om',
-    name: { en: 'Salalah', ar: 'صلالة' }, governorate: { en: 'Dhofar', ar: 'محافظة ظفار' }, response: { en: 'Scheduled visits', ar: 'زيارات حسب الموعد' },
-    areas: { en: ['Salalah city', 'Al Saada', 'Al Dahariz', 'Awqad', 'Al Haffa'], ar: ['مدينة صلالة', 'السعادة', 'الدهاريز', 'عوقد', 'الحافة'] },
-    blurb: {
-      en: 'High humidity during the Khareef season means more mould and drainage problems in ACs and fridges. Book ahead for scheduled service in Salalah.',
-      ar: 'الرطوبة العالية خلال موسم الخريف تعني مشاكل أكثر في العفن والتصريف في المكيفات والثلاجات، لذا احجز مسبقًا للخدمة المجدولة في صلالة.',
-    },
-    geo: { lat: 17.0151, lng: 54.0924 },
   },
 ];
 

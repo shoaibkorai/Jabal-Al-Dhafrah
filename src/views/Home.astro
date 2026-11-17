@@ -7,7 +7,7 @@ import ServiceCard from '../components/ServiceCard.astro';
 import { site, type Lang } from '../config/site';
 import { t, href, waLink } from '../i18n/ui';
 import { services } from '../data/services';
-import { countries, countryOrder, topLevel } from '../data/cities';
+import { topLevel, childrenOf } from '../data/cities';
 import { faqSchema } from '../lib/schema';
 import { Image } from 'astro:assets';
 import hero from '../assets/hero.jpg'; // ← replace with your real team photo
@@ -15,6 +15,22 @@ interface Props { lang: Lang }
 const { lang } = Astro.props;
 const u = t(lang);
 const whyIcons = ['bolt', 'tag', 'user', 'shield'];
+// Every place we serve, in geographic order: each city, its area pages, then the smaller
+// neighbourhoods listed on those pages (these link to the page that covers them).
+// Neighbourhood lists also hold descriptive notes ("Sur city", "MSQ Villas", "CBD"); keep only real place names.
+const descriptive = /(town|city|coast|villages|residential|offices|housing|villas|apartments|roundabout|road|souq area|market|corniche|commercial|shopping|cbd|pdo area|centre area|marina area|university area|district|high street|souq|showrooms|shopping area)$|heights$|^old al khoud$/i;
+const realNames = new Set(['Airport Heights', 'Sultan Haitham City', 'Seeb Souq']);
+const isPlaceName = (en: string) => realNames.has(en) || !descriptive.test(en);
+const places: { name: string; slug: string }[] = [];
+const seen = new Set<string>();
+const addPlace = (name: string, nameEn: string, slug: string) => { if (!seen.has(nameEn)) { seen.add(nameEn); places.push({ name, slug }); } };
+for (const city of topLevel()) {
+  const group = [city, ...childrenOf(city.slug)];
+  group.forEach((c) => addPlace(c.name[lang], c.name.en, c.slug));
+  group.forEach((c) => c.areas.en.forEach((en, i) => isPlaceName(en) && addPlace(c.areas[lang][i], en, c.slug)));
+  // Common alternative English spellings (e.g. "Al Mabela", "Bosher") people search for
+  if (lang === 'en') group.forEach((c) => c.aka?.[0] && addPlace(c.aka[0], c.aka[0], c.slug));
+}
 // A general FAQ drawn from the strongest service questions
 const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], services[3].faqs[0], services[0].faqs[2]]
   .map((f) => ({ q: f.q[lang], a: f.a[lang] }));
@@ -27,7 +43,7 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
     <div class="container-x relative grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.1fr_1fr] lg:py-20">
       <div>
         <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium">
-          <span class="size-2 rounded-full bg-green-400"></span>{u.hoursValue}
+          <span class="size-2 rounded-full bg-green-400"></span>{u.licensed} {site.crNumber}
         </p>
         <h1 class="mt-5 text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">{u.heroTitle}</h1>
         <p class="mt-5 max-w-xl text-lg text-brand-100">{u.heroSub}</p>
@@ -35,7 +51,15 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
           <a href={`tel:${site.phone}`} class="btn-primary text-lg"><Icon name="phone" class="size-5" />{u.callNow}</a>
           <a href={waLink(lang)} target="_blank" rel="noopener" class="btn-wa text-lg"><Icon name="whatsapp" class="size-5" />{u.bookWhatsapp}</a>
         </div>
-        <ul class="mt-8 grid grid-cols-2 gap-3 text-sm sm:text-base">
+        <!-- 24/7 availability as a live status line (client request), not a button look-alike -->
+        <p class="mt-6 flex items-center gap-3 text-lg">
+          <span class="relative flex size-3 shrink-0" aria-hidden="true">
+            <span class="absolute inline-flex size-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex size-3 rounded-full bg-green-400"></span>
+          </span>
+          <span><strong class="font-bold text-white">{u.open247}</strong> <span class="text-brand-100">· {u.open247Sub}</span></span>
+        </p>
+        <ul class="mt-6 grid grid-cols-2 gap-3 text-sm sm:text-base">
           {u.trust.map((x) => <li class="flex items-start gap-2"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-accent-400" />{x}</li>)}
         </ul>
       </div>
@@ -52,7 +76,7 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
 
   <!-- Service strip (scrolls sideways on phones) -->
   <nav aria-label={u.servicesTitle} class="bg-brand-900 text-white">
-    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-5 lg:gap-x-4 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-x-4 xl:grid-cols-6 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
       {services.map((s) => (
         <li class="shrink-0 snap-start">
           <a href={href(lang, `/services/${s.slug}/`)} class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm leading-tight font-semibold whitespace-nowrap hover:bg-white/10 lg:whitespace-normal">
@@ -103,25 +127,20 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
     </ol>
   </section>
 
-  <!-- Areas -->
+  <!-- Locations & areas: one link per place (Fixar-style list the client asked for) -->
   <section class="bg-slate-50">
     <div class="container-x py-14 sm:py-20">
-      <h2 class="h2">{u.areasTitle}</h2>
+      <h2 class="h2">{u.locationsTitle}</h2>
       <p class="mt-2 text-muted">{u.areasSub}</p>
-      {countryOrder.map((cc) => (
-        <>
-          <h3 class="mt-8 text-sm font-semibold tracking-wide text-muted uppercase">{countries[cc].name[lang]}</h3>
-          <ul class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {topLevel(cc).map((c) => (
-              <li>
-                <a href={href(lang, `/areas/${c.slug}/`)} class="flex min-h-12 items-center gap-2 rounded-xl bg-white px-4 py-3 font-medium shadow-sm ring-1 ring-slate-200 hover:ring-brand-500">
-                  <Icon name="pin" class="size-5 shrink-0 text-brand-600" />{c.name[lang]}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      ))}
+      <ul class="mt-8 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+        {places.map((p) => (
+          <li>
+            <a href={href(lang, `/areas/${p.slug}/`)} class="flex min-h-11 items-center gap-2.5 border-b border-slate-200 py-2 hover:text-brand-600">
+              <span class="size-1.5 shrink-0 rounded-sm bg-ink" aria-hidden="true"></span>{u.centre(p.name)}
+            </a>
+          </li>
+        ))}
+      </ul>
       <a href={href(lang, '/areas/')} class="mt-6 inline-flex min-h-11 items-center gap-1 font-semibold text-brand-600">{u.nav.areas}<Icon name="chevron" class="size-4 rtl:rotate-180" /></a>
     </div>
   </section>

@@ -6,7 +6,7 @@ type L = Record<Lang, string[]>;
 export interface Service {
   slug: string;
   icon: string; // key in components/Icon.astro
-  category: 'ac' | 'appliance' | 'electrical' | 'commercial';
+  category: 'ac' | 'appliance' | 'electrical' | 'commercial' | 'plumbing';
   name: T;
   title: T; // <title> / H1
   short: T; // card + meta description
@@ -800,6 +800,164 @@ export const services: Service[] = [
         a: {
           en: 'Yes. Regular servicing of ovens and mixers reduces breakdowns and keeps baking consistent.',
           ar: 'نعم، الصيانة المنتظمة للأفران والعجانات تقلل الأعطال وتحافظ على جودة الخبز.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'plumbing',
+    icon: 'pipe',
+    category: 'plumbing',
+    name: { en: 'Plumbing', ar: 'السباكة' },
+    title: {
+      en: 'Plumber & Plumbing Services in Muscat, Oman',
+      ar: 'سباك وخدمات السباكة في مسقط، عُمان',
+    },
+    short: {
+      en: 'Plumber for leaks, blocked drains, taps, toilets, water tanks, pumps and pipe repairs in homes and businesses.',
+      ar: 'سباك لإصلاح التسريبات وانسداد المجاري والحنفيات والمراحيض وخزانات المياه والمضخات وتمديدات الأنابيب في المنازل والشركات.',
+    },
+    intro: {
+      en: [
+        'A leaking pipe or blocked drain can damage walls and floors fast. Our plumbers find the source of the problem and fix it properly, in villas, apartments, shops and offices.',
+        'We also handle water tanks, booster pumps and water heater connections — common trouble spots in Omani homes where water pressure and hard water take their toll.',
+      ],
+      ar: [
+        'تسريب الأنابيب أو انسداد المجاري قد يتلف الجدران والأرضيات بسرعة. يحدد سباكونا مصدر المشكلة ويصلحونها بشكل صحيح في الفلل والشقق والمحلات والمكاتب.',
+        'كما نتعامل مع خزانات المياه ومضخات رفع الضغط وتوصيلات سخانات الماء، وهي من أكثر نقاط الأعطال شيوعًا في منازل عُمان بسبب ضغط المياه والماء العسر.',
+      ],
+    },
+    problems: {
+      en: [
+        'Leaking pipes, taps and mixers',
+        'Blocked sinks, drains and toilets',
+        'Low water pressure or pump not working',
+        'Water tank overflow, float valve and cleaning',
+        'Toilet flush, cistern and bidet spray repairs',
+        'New bathroom and kitchen fittings',
+      ],
+      ar: [
+        'تسريب الأنابيب والحنفيات والخلاطات',
+        'انسداد المغاسل والمجاري والمراحيض',
+        'ضعف ضغط المياه أو تعطل المضخة',
+        'فيضان خزان المياه وعوامة الخزان وتنظيفه',
+        'إصلاح سيفون المرحاض والخزان والشطاف',
+        'تركيب تجهيزات جديدة للحمامات والمطابخ',
+      ],
+    },
+    includes: {
+      en: [
+        'Leak and pressure check to find the real cause',
+        'Price agreed before work starts',
+        'Quality pipes, fittings and sealants',
+        'Clean-up and written warranty on the work',
+      ],
+      ar: [
+        'فحص التسريب والضغط لتحديد السبب الحقيقي',
+        'سعر متفق عليه قبل بدء العمل',
+        'أنابيب وتجهيزات ومواد عزل عالية الجودة',
+        'تنظيف المكان وضمان مكتوب على العمل',
+      ],
+    },
+    faqs: [
+      {
+        q: { en: 'Do you come for emergency leaks?', ar: 'هل تأتون في حالات التسريب الطارئة؟' },
+        a: {
+          en: 'Yes, we’re available 24/7. Turn off the main water valve to limit damage, then call or WhatsApp us.',
+          ar: 'نعم، نعمل على مدار الساعة طوال أيام الأسبوع. أغلق محبس المياه الرئيسي لتقليل الضرر ثم اتصل بنا أو راسلنا على واتساب.',
+        },
+      },
+      {
+        q: { en: 'Why is my water pressure low?', ar: 'لماذا ضغط المياه ضعيف؟' },
+        a: {
+          en: 'Common causes are a faulty booster pump, a blocked filter or scale build-up in pipes and taps. We test the pump and pipework to find it.',
+          ar: 'من الأسباب الشائعة تعطل مضخة رفع الضغط أو انسداد الفلتر أو تراكم الترسبات في الأنابيب والحنفيات، ونفحص المضخة والتمديدات لتحديد السبب.',
+        },
+      },
+      {
+        q: { en: 'Do you clean water tanks?', ar: 'هل تنظفون خزانات المياه؟' },
+        a: {
+          en: 'Yes — tank cleaning, float valve replacement and overflow fixes for rooftop and ground tanks.',
+          ar: 'نعم، تنظيف الخزانات واستبدال العوامة وإصلاح الفيضان للخزانات العلوية والأرضية.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'kitchen-hood-repair',
+    icon: 'hood',
+    category: 'appliance',
+    name: { en: 'Kitchen Chimney & Hood Repair', ar: 'صيانة شفاطات المطبخ' },
+    title: {
+      en: 'Kitchen Chimney & Hood Repair in Muscat, Oman',
+      ar: 'صيانة وتنظيف شفاطات ومداخن المطبخ في مسقط، عُمان',
+    },
+    short: {
+      en: 'Kitchen chimney and range hood repair, cleaning and installation: weak suction, noise, lights, motors and filters.',
+      ar: 'إصلاح وتنظيف وتركيب شفاطات ومداخن المطبخ: ضعف الشفط والإزعاج والإنارة والمحركات والفلاتر.',
+    },
+    intro: {
+      en: [
+        'Oman kitchens cook with a lot of heat and oil, so chimneys and hoods clog quickly. When suction drops, smoke and grease spread through the house. We repair, deep-clean and install wall, island and built-in hoods.',
+        'Our technicians fix motors, fans, switches and lights, replace grease and charcoal filters, and check the duct so the hood pulls air properly again.',
+      ],
+      ar: [
+        'تعتمد مطابخ عُمان على الطهي بحرارة وزيت كثيرين، لذلك تنسد الشفاطات والمداخن بسرعة، وعندما يضعف الشفط ينتشر الدخان والدهون في المنزل. نصلح وننظف تنظيفًا عميقًا ونركّب الشفاطات الجدارية والمركزية والمدمجة.',
+        'يصلح فنيونا المحركات والمراوح والمفاتيح والإنارة، ويستبدلون فلاتر الدهون والكربون، ويفحصون مجرى الهواء ليعود الشفاط إلى سحب الهواء بشكل صحيح.',
+      ],
+    },
+    problems: {
+      en: [
+        'Weak suction or smoke not clearing',
+        'Loud noise or vibration',
+        'Motor or fan not working',
+        'Lights or buttons not responding',
+        'Grease dripping or blocked filters',
+        'New hood or chimney installation',
+      ],
+      ar: [
+        'ضعف الشفط أو عدم خروج الدخان',
+        'صوت عالٍ أو اهتزاز',
+        'المحرك أو المروحة لا يعمل',
+        'الإنارة أو الأزرار لا تستجيب',
+        'تنقيط الدهون أو انسداد الفلاتر',
+        'تركيب شفاط أو مدخنة جديدة',
+      ],
+    },
+    includes: {
+      en: [
+        'Motor, fan and switch testing',
+        'Filter cleaning or replacement',
+        'Duct and airflow check',
+        'Written warranty on the repair',
+      ],
+      ar: [
+        'اختبار المحرك والمروحة والمفاتيح',
+        'تنظيف الفلاتر أو استبدالها',
+        'فحص مجرى الهواء وقوة السحب',
+        'ضمان مكتوب على الإصلاح',
+      ],
+    },
+    faqs: [
+      {
+        q: { en: 'How often should a kitchen hood be cleaned?', ar: 'كم مرة يجب تنظيف شفاط المطبخ؟' },
+        a: {
+          en: 'Wash grease filters every month and have a deep clean every 6 months, more often if you fry a lot.',
+          ar: 'اغسل فلاتر الدهون كل شهر واطلب تنظيفًا عميقًا كل 6 أشهر، وأكثر من ذلك إذا كنت تقلي كثيرًا.',
+        },
+      },
+      {
+        q: { en: 'Why is my hood not pulling smoke?', ar: 'لماذا لا يسحب الشفاط الدخان؟' },
+        a: {
+          en: 'Usually clogged filters, a weak motor or a blocked duct. We find and fix the cause on site.',
+          ar: 'غالبًا بسبب انسداد الفلاتر أو ضعف المحرك أو انسداد مجرى الهواء، ونحدد السبب ونصلحه في الموقع.',
+        },
+      },
+      {
+        q: { en: 'Do you install new hoods?', ar: 'هل تركّبون شفاطات جديدة؟' },
+        a: {
+          en: 'Yes — wall, island and built-in hoods, including ducting and electrical connection.',
+          ar: 'نعم، الشفاطات الجدارية والمركزية والمدمجة، بما في ذلك تمديد مجرى الهواء والتوصيل الكهربائي.',
         },
       },
     ],
