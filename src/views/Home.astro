@@ -17,7 +17,7 @@ const u = t(lang);
 const whyIcons = ['bolt', 'tag', 'user', 'shield'];
 // Every place we serve, in geographic order: each city, its area pages, then the smaller
 // neighbourhoods listed on those pages (these link to the page that covers them).
-// Neighbourhood lists also hold descriptive notes ("Sur city", "MSQ Villas", "CBD"); keep only real place names.
+// Neighbourhood lists also hold descriptive notes ("Barka town", "MSQ Villas", "CBD"); keep only real place names.
 const descriptive = /(town|city|coast|villages|residential|offices|housing|villas|apartments|roundabout|road|souq area|market|corniche|commercial|shopping|cbd|pdo area|centre area|marina area|university area|district|high street|souq|showrooms|shopping area)$|heights$|^old al khoud$/i;
 const realNames = new Set(['Airport Heights', 'Sultan Haitham City', 'Seeb Souq']);
 const isPlaceName = (en: string) => realNames.has(en) || !descriptive.test(en);

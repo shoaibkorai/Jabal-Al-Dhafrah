@@ -271,16 +271,6 @@ export const cities: City[] = [
     geo: { lat: 23.5228, lng: 58.4968 },
   },
   {
-    slug: 'qurayyat', country: 'om',
-    name: { en: 'Qurayyat', ar: 'قريات' }, governorate: MUSCAT_GOV, response: { en: 'Same or next day', ar: 'في نفس اليوم أو اليوم التالي' },
-    areas: { en: ['Qurayyat town', 'Dagmar', 'Hayl Al Ghaf'], ar: ['مدينة قريات', 'ضغمر', 'حيل الغاف'] },
-    blurb: {
-      en: 'We serve homes and farms around Qurayyat on scheduled visit days, with urgent call-outs available for AC and fridge breakdowns.',
-      ar: 'نخدم المنازل والمزارع في قريات وما حولها في أيام زيارات مجدولة، مع إمكانية الزيارات العاجلة لأعطال المكيفات والثلاجات.',
-    },
-    geo: { lat: 23.2619, lng: 58.9161 },
-  },
-  {
     slug: 'barka', country: 'om',
     name: { en: 'Barka', ar: 'بركاء' }, governorate: { en: 'South Al Batinah', ar: 'محافظة جنوب الباطنة' }, response: { en: 'Same day', ar: 'في نفس اليوم' },
     areas: { en: ['Barka town', 'Al Sawadi', 'Al Rumais', 'Hay Asim'], ar: ['مدينة بركاء', 'السوادي', 'الرميس', 'حي عاصم'] },
@@ -289,26 +279,6 @@ export const cities: City[] = [
       ar: 'تقع بركاء غرب السيب مباشرة وعلى مسافة قريبة من فريقنا في مسقط، لذلك تتم معظم الزيارات في نفس اليوم.',
     },
     geo: { lat: 23.6787, lng: 57.8858 },
-  },
-  {
-    slug: 'al-khaboura', country: 'om', aka: ['Khaboura', 'Al Khabourah'],
-    name: { en: 'Al Khaboura', ar: 'الخابورة' }, governorate: { en: 'North Al Batinah', ar: 'محافظة شمال الباطنة' }, response: { en: 'Scheduled visits', ar: 'زيارات حسب الموعد' },
-    areas: { en: ['Al Khaboura town', 'Al Khaboura coast', 'Al Khaboura villages'], ar: ['مدينة الخابورة', 'ساحل الخابورة', 'قرى الخابورة'] },
-    blurb: {
-      en: 'We visit Al Khaboura on scheduled service days for AC repair, cleaning and appliance work in homes, farms and shops along the Batinah coast.',
-      ar: 'نزور الخابورة في أيام خدمة مجدولة لإصلاح وتنظيف المكيفات وصيانة الأجهزة في المنازل والمزارع والمحلات على ساحل الباطنة.',
-    },
-    geo: { lat: 23.971, lng: 57.094 },
-  },
-  {
-    slug: 'sur', country: 'om',
-    name: { en: 'Sur', ar: 'صور' }, governorate: { en: 'South Ash Sharqiyah', ar: 'محافظة جنوب الشرقية' }, response: NEXT_DAY,
-    areas: { en: ['Sur city', 'Al Ayjah', 'Ras Al Hadd'], ar: ['مدينة صور', 'العيجة', 'رأس الحد'] },
-    blurb: {
-      en: 'Salty coastal air corrodes outdoor AC units faster in Sur. Our service visits include coil cleaning and anti-corrosion checks.',
-      ar: 'الهواء الساحلي المالح يسرّع تآكل الوحدات الخارجية للمكيفات في صور، لذلك تشمل زياراتنا تنظيف الملفات وفحص التآكل.',
-    },
-    geo: { lat: 22.5667, lng: 59.5289 },
   },
 ];
 
