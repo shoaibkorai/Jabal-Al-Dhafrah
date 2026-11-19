@@ -3,7 +3,7 @@
 //  Every page, schema tag, button and footer reads from here.
 // ─────────────────────────────────────────────────────────────
 export const site = {
-  url: 'https://main.d1aiker9zrpvd2.amplifyapp.com', // ⚠️ switch to your custom domain when it's connected
+  url: 'https://www.jabalaldhafrah.com', // live domain (Amplify custom domain, apex redirects to www)
   name: { en: 'Jabal Al Dhafrah', ar: 'جبال الظفرة' },
   // Registered name exactly as on the Commercial Registration
   legalName: { en: 'Jabal Al Dhafrah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
