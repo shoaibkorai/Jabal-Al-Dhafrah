@@ -18,3 +18,4 @@ keep the same file names.
 | water-heater-repair.jpg | https://www.pexels.com/photo/white-washing-machine-in-the-bathroom-8142983/ (cropped to the heater) |
 | plumbing.jpg | https://www.pexels.com/photo/plumber-installs-pipe-fittings-6419128/ |
 | kitchen-hood-repair.jpg | https://www.pexels.com/photo/stainless-steel-cooking-pots-on-stove-11179240/ |
+| building-maintenance.jpg | https://www.pexels.com/photo/17041924/ (cropped) |

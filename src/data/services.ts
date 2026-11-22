@@ -6,7 +6,7 @@ type L = Record<Lang, string[]>;
 export interface Service {
   slug: string;
   icon: string; // key in components/Icon.astro
-  category: 'ac' | 'appliance' | 'electrical' | 'commercial' | 'plumbing';
+  category: 'ac' | 'appliance' | 'electrical' | 'commercial' | 'plumbing' | 'building';
   name: T;
   title: T; // <title> / H1
   short: T; // card + meta description
@@ -958,6 +958,85 @@ export const services: Service[] = [
         a: {
           en: 'Yes — wall, island and built-in hoods, including ducting and electrical connection.',
           ar: 'نعم، الشفاطات الجدارية والمركزية والمدمجة، بما في ذلك تمديد مجرى الهواء والتوصيل الكهربائي.',
+        },
+      },
+    ],
+  },
+  {
+    slug: 'building-maintenance',
+    icon: 'building',
+    category: 'building',
+    name: { en: 'Building Maintenance', ar: 'صيانة المباني' },
+    title: {
+      en: 'Building Maintenance Services in Muscat, Oman',
+      ar: 'خدمات صيانة المباني في مسقط، عُمان',
+    },
+    short: {
+      en: 'Villa, apartment, shop and office maintenance: painting, wall and ceiling repairs, tiling, doors, waterproofing and annual contracts.',
+      ar: 'صيانة الفلل والشقق والمحلات والمكاتب: الدهان وإصلاح الجدران والأسقف والبلاط والأبواب والعزل المائي وعقود الصيانة السنوية.',
+    },
+    intro: {
+      en: [
+        'Oman’s heat, humidity and dust are hard on buildings: paint fades, plaster cracks, roofs leak in the rains and doors stick. Our maintenance team keeps villas, apartments, shops and offices in good condition, with one call for every job.',
+        'We handle painting, gypsum and false ceilings, tiling, doors and locks, waterproofing and general handyman work, and our AC, electrical and plumbing technicians are part of the same team. Building owners and property managers can also book planned maintenance under an annual contract.',
+      ],
+      ar: [
+        'حرارة عُمان ورطوبتها وغبارها تؤثر على المباني: يبهت الدهان وتتشقق اللياسة وتتسرب الأسطح مع الأمطار وتعلق الأبواب. يحافظ فريق الصيانة لدينا على الفلل والشقق والمحلات والمكاتب في حالة جيدة، باتصال واحد لكل الأعمال.',
+        'نتولى الدهان والجبس والأسقف المستعارة والبلاط والأبواب والأقفال والعزل المائي وأعمال الصيانة العامة، وفنيو التكييف والكهرباء والسباكة جزء من الفريق نفسه. ويمكن لملاك المباني ومديري العقارات حجز صيانة دورية بعقد سنوي.',
+      ],
+    },
+    problems: {
+      en: [
+        'Interior and exterior painting',
+        'Wall cracks, plaster and dampness repairs',
+        'Gypsum board and false ceiling work',
+        'Floor and wall tile repair or replacement',
+        'Roof and bathroom waterproofing, leak sealing',
+        'Doors, locks, cabinets and general handyman jobs',
+      ],
+      ar: [
+        'دهان داخلي وخارجي',
+        'إصلاح تشققات الجدران واللياسة والرطوبة',
+        'أعمال الجبس بورد والأسقف المستعارة',
+        'إصلاح أو استبدال بلاط الأرضيات والجدران',
+        'عزل الأسطح والحمامات مائيًا وسد التسريبات',
+        'الأبواب والأقفال والخزائن وأعمال الصيانة العامة',
+      ],
+    },
+    includes: {
+      en: [
+        'Site visit to inspect and list the work needed',
+        'Clear quotation agreed before work starts',
+        'Quality paints and materials, tidy work and clean-up',
+        'Annual maintenance contracts for villas and buildings',
+      ],
+      ar: [
+        'زيارة للموقع لفحص الأعمال المطلوبة وتحديدها',
+        'عرض سعر واضح متفق عليه قبل بدء العمل',
+        'دهانات ومواد عالية الجودة وعمل مرتب مع التنظيف',
+        'عقود صيانة سنوية للفلل والمباني',
+      ],
+    },
+    faqs: [
+      {
+        q: { en: 'Do you offer annual maintenance contracts?', ar: 'هل تقدمون عقود صيانة سنوية؟' },
+        a: {
+          en: 'Yes. We offer annual contracts for villas, apartment buildings, shops and offices, covering scheduled checks plus AC, electrical, plumbing and civil repairs.',
+          ar: 'نعم، نقدم عقودًا سنوية للفلل والبنايات السكنية والمحلات والمكاتب، تشمل فحوصات دورية وإصلاحات التكييف والكهرباء والسباكة والأعمال المدنية.',
+        },
+      },
+      {
+        q: { en: 'Can you repaint my villa or apartment before moving in?', ar: 'هل يمكنكم إعادة دهان الفيلا أو الشقة قبل الانتقال إليها؟' },
+        a: {
+          en: 'Yes — we repair cracks and patches, then paint walls, ceilings, doors and exterior walls. Send photos on WhatsApp for a quick estimate.',
+          ar: 'نعم، نصلح التشققات والعيوب ثم ندهن الجدران والأسقف والأبواب والواجهات الخارجية. أرسل صورًا عبر واتساب لتقدير سريع.',
+        },
+      },
+      {
+        q: { en: 'My roof leaks when it rains. Can you fix it?', ar: 'السطح يتسرب عند المطر، هل يمكنكم إصلاحه؟' },
+        a: {
+          en: 'Yes. We find the leak, repair cracks and joints, and apply waterproofing to the roof or bathroom to stop water coming through.',
+          ar: 'نعم، نحدد مكان التسريب ونصلح التشققات والفواصل ونطبق العزل المائي على السطح أو الحمام لمنع تسرب المياه.',
         },
       },
     ],

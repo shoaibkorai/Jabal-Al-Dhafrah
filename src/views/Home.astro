@@ -10,7 +10,7 @@ import { services } from '../data/services';
 import { topLevel, childrenOf } from '../data/cities';
 import { faqSchema } from '../lib/schema';
 import { Image } from 'astro:assets';
-import hero from '../assets/hero.jpg'; // ← replace with your real team photo
+import hero from '../assets/hero.jpg'; // SERVIXO team banner
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const u = t(lang);
@@ -64,21 +64,19 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
         </ul>
       </div>
       <div class="relative">
-        <Image src={hero} alt={u.heroAlt} widths={[480, 768, 1024, 1400]} sizes="(min-width: 1024px) 560px, 100vw"
-          loading="eager" fetchpriority="high" class="aspect-[16/10] w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/20" />
-        <div class="absolute -bottom-5 start-4 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 text-ink shadow-xl sm:start-6">
-          <Icon name="shield" class="size-8 text-wa" />
-          <span class="text-sm leading-tight font-semibold">{u.trust[2]}<br /><span class="font-normal text-muted">{u.trust[3]}</span></span>
-        </div>
+        <!-- Branded team banner: shown uncropped (its logo and service strip sit at the edges) -->
+        <Image src={hero} alt={u.heroAlt} widths={[480, 768, 1024, 1400, 1688]} sizes="(min-width: 1152px) 525px, (min-width: 1024px) 45vw, 100vw"
+          loading="eager" fetchpriority="high" class="aspect-[1688/932] w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/20" />
       </div>
     </div>
   </section>
 
   <!-- Service strip (scrolls sideways on phones) -->
   <nav aria-label={u.servicesTitle} class="bg-brand-900 text-white">
-    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:gap-x-4 xl:grid-cols-6 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
+    <!-- desktop: wraps into rows with any leftover items centred (works for any number of services) -->
+    <ul class="container-x flex snap-x gap-2 overflow-x-auto py-3 [scrollbar-width:none] lg:flex-wrap lg:justify-center lg:gap-x-4 lg:overflow-visible [&::-webkit-scrollbar]:hidden">
       {services.map((s) => (
-        <li class="shrink-0 snap-start">
+        <li class="shrink-0 snap-start lg:basis-[calc((100%-3rem)/4)] xl:basis-[calc((100%-5rem)/6)]">
           <a href={href(lang, `/services/${s.slug}/`)} class="flex min-h-11 items-center gap-2 rounded-lg px-3 py-2 text-sm leading-tight font-semibold whitespace-nowrap hover:bg-white/10 lg:whitespace-normal">
             <span class="flex size-8 items-center justify-center rounded-md bg-accent-500 text-ink"><Icon name={s.icon} class="size-5" /></span>
             {s.name[lang]}
@@ -92,7 +90,8 @@ const faqs = [services[0].faqs[0], services[0].faqs[1], services[1].faqs[0], ser
   <section class="container-x py-14 sm:py-20">
     <h2 class="h2">{u.servicesTitle}</h2>
     <p class="mt-2 text-muted">{u.servicesSub}</p>
-    <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <!-- a lone card on the last row is centred instead of left hanging -->
+    <div class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3 md:max-xl:[&>*:last-child:nth-child(odd)]:col-span-2 md:max-xl:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.5rem)] md:max-xl:[&>*:last-child:nth-child(odd)]:justify-self-center xl:[&>*:last-child:nth-child(3n+1)]:col-start-2">
       {services.map((s) => <ServiceCard lang={lang} service={s} />)}
     </div>
   </section>

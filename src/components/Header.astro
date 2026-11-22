@@ -24,7 +24,7 @@ const links = [
         <span class="truncate text-xl leading-tight font-extrabold tracking-tight text-brand-900 sm:text-2xl">
           {lang === 'en' ? <>SERVI<span class="text-accent-500">X</span>O</> : site.name.ar}
         </span>
-        <span class="truncate text-xs leading-tight font-medium text-muted max-[359px]:text-[11px] max-[359px]:tracking-tight">{site.byline[lang]}</span>
+        <span class="truncate text-xs leading-tight font-medium text-muted max-[389px]:text-[11px] max-[389px]:tracking-tight max-[359px]:text-[10px]">{site.byline[lang]}</span>
       </span>
     </a>
 
@@ -36,7 +36,7 @@ const links = [
 
     <div class="flex shrink-0 items-center gap-1 sm:gap-2">
       <a href={switchTo} hreflang={lang === 'en' ? 'ar' : 'en'} lang={lang === 'en' ? 'ar' : 'en'} class="inline-flex min-h-11 items-center gap-1 rounded-lg px-1.5 text-sm font-semibold sm:gap-1.5 sm:px-3 text-brand-700 hover:bg-brand-50">
-        <Icon name="globe" class="size-5" /><span class="sm:hidden" aria-hidden="true">{u.switchLangShort}</span><span class="max-sm:sr-only">{u.switchLang}</span>
+        <Icon name="globe" class="size-5 max-[359px]:hidden" /><span class="sm:hidden" aria-hidden="true">{u.switchLangShort}</span><span class="max-sm:sr-only">{u.switchLang}</span>
       </a>
       <a href={`tel:${site.phone}`} class="btn-primary hidden !min-h-11 md:inline-flex">
         <Icon name="phone" class="size-5" /><span dir="ltr">{site.phoneDisplay}</span>

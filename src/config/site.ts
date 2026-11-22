@@ -6,9 +6,9 @@ export const site = {
   url: 'https://www.servixo.org', // main domain; servixo.org and jabalaldhafrah.com 301 to it
   name: { en: 'Servixo', ar: 'سيرفيكسو' }, // brand name
   // Shown under the brand name in the header/footer
-  byline: { en: 'Services by Jabal Al Dhafrah', ar: 'خدمات من جبال الظفرة' },
+  byline: { en: 'Repair Services by Jabal Al Dhafirah', ar: 'خدمات الإصلاح من جبال الظفرة' },
   // Registered name exactly as on the Commercial Registration
-  legalName: { en: 'Jabal Al Dhafrah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
+  legalName: { en: 'Jabal Al Dhafirah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
   crNumber: '1029306',
   tagline: {
     en: 'AC, Appliance & Electrical Repair in Oman',
