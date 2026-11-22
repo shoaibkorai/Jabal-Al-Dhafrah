@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.jabalaldhafrah.com/sitemap-index.xml
+Sitemap: https://www.servixo.org/sitemap-index.xml

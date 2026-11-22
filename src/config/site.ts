@@ -3,7 +3,7 @@
 //  Every page, schema tag, button and footer reads from here.
 // ─────────────────────────────────────────────────────────────
 export const site = {
-  url: 'https://www.jabalaldhafrah.com', // live domain (Amplify custom domain, apex redirects to www)
+  url: 'https://www.servixo.org', // main domain; servixo.org and jabalaldhafrah.com 301 to it
   name: { en: 'Servixo', ar: 'سيرفيكسو' }, // brand name
   // Shown under the brand name in the header/footer
   byline: { en: 'Services by Jabal Al Dhafrah', ar: 'خدمات من جبال الظفرة' },
