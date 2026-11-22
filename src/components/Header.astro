@@ -17,28 +17,33 @@ const links = [
 ];
 ---
 <header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/95 backdrop-blur">
-  <div class="container-x flex h-16 items-center justify-between gap-4">
-    <a href={href(lang, '/')} class="flex min-h-11 min-w-0 items-center gap-2 text-base font-bold whitespace-nowrap text-brand-700 sm:text-lg">
-      <img src="/logo.svg" alt="" width="32" height="32" class="size-8 shrink-0" />
-      <span class="truncate">{site.name[lang]}</span>
+  <div class="container-x flex h-16 items-center justify-between gap-2 sm:gap-4">
+    <a href={href(lang, '/')} class="flex min-h-11 min-w-0 items-center gap-2 whitespace-nowrap">
+      <img src="/favicon.svg" alt="" width="40" height="40" class="size-8 shrink-0 min-[360px]:size-9 sm:size-10" />
+      <span class="flex min-w-0 flex-col">
+        <span class="truncate text-xl leading-tight font-extrabold tracking-tight text-brand-900 sm:text-2xl">
+          {lang === 'en' ? <>SERVI<span class="text-accent-500">X</span>O</> : site.name.ar}
+        </span>
+        <span class="truncate text-xs leading-tight font-medium text-muted max-[359px]:text-[11px] max-[359px]:tracking-tight">{site.byline[lang]}</span>
+      </span>
     </a>
 
-    <nav class="hidden items-center gap-6 md:flex" aria-label="Main">
+    <nav class="hidden items-center gap-6 lg:flex" aria-label="Main">
       {links.map((l) => (
         <a href={href(lang, l.path)} aria-current={isActive(l.path) ? 'page' : undefined} class:list={['font-medium hover:text-brand-600', isActive(l.path) ? 'text-brand-600' : 'text-ink']}>{l.label}</a>
       ))}
     </nav>
 
-    <div class="flex items-center gap-2">
-      <a href={switchTo} hreflang={lang === 'en' ? 'ar' : 'en'} lang={lang === 'en' ? 'ar' : 'en'} class="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-2 text-sm sm:px-3 font-semibold text-brand-700 hover:bg-brand-50">
-        <Icon name="globe" class="size-5" />{u.switchLang}
+    <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+      <a href={switchTo} hreflang={lang === 'en' ? 'ar' : 'en'} lang={lang === 'en' ? 'ar' : 'en'} class="inline-flex min-h-11 items-center gap-1 rounded-lg px-1.5 text-sm font-semibold sm:gap-1.5 sm:px-3 text-brand-700 hover:bg-brand-50">
+        <Icon name="globe" class="size-5" /><span class="sm:hidden" aria-hidden="true">{u.switchLangShort}</span><span class="max-sm:sr-only">{u.switchLang}</span>
       </a>
       <a href={`tel:${site.phone}`} class="btn-primary hidden !min-h-11 md:inline-flex">
         <Icon name="phone" class="size-5" /><span dir="ltr">{site.phoneDisplay}</span>
       </a>
 
       <!-- Mobile menu: no JS needed -->
-      <details class="group relative md:hidden">
+      <details class="group relative lg:hidden">
         <summary class="flex size-11 cursor-pointer list-none items-center justify-center rounded-lg hover:bg-slate-100 [&::-webkit-details-marker]:hidden" aria-label="Menu">
           <Icon name="menu" class="size-6 group-open:hidden" /><Icon name="close" class="hidden size-6 group-open:block" />
         </summary>

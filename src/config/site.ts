@@ -4,7 +4,9 @@
 // ─────────────────────────────────────────────────────────────
 export const site = {
   url: 'https://www.jabalaldhafrah.com', // live domain (Amplify custom domain, apex redirects to www)
-  name: { en: 'Jabal Al Dhafrah', ar: 'جبال الظفرة' },
+  name: { en: 'Servixo', ar: 'سيرفيكسو' }, // brand name
+  // Shown under the brand name in the header/footer
+  byline: { en: 'Services by Jabal Al Dhafrah', ar: 'خدمات من جبال الظفرة' },
   // Registered name exactly as on the Commercial Registration
   legalName: { en: 'Jabal Al Dhafrah Trading & Contracting', ar: 'جبال الظفرة للتجارة والمقاولات' },
   crNumber: '1029306',

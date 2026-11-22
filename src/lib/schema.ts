@@ -13,7 +13,7 @@ export function business(lang: Lang) {
     '@type': ['HVACBusiness', 'Electrician', 'Plumber', 'HomeAndConstructionBusiness'],
     '@id': BUSINESS_ID,
     name: site.name[lang],
-    alternateName: [site.name[lang === 'en' ? 'ar' : 'en'], site.legalName[lang === 'en' ? 'ar' : 'en']],
+    alternateName: [site.name[lang === 'en' ? 'ar' : 'en'], 'Jabal Al Dhafrah', 'جبال الظفرة', site.legalName[lang === 'en' ? 'ar' : 'en']],
     legalName: site.legalName[lang],
     identifier: { '@type': 'PropertyValue', name: 'Commercial Registration (Oman)', value: site.crNumber },
     contactPoint: [site.phone, site.phone2].map((tel) => ({ '@type': 'ContactPoint', telephone: tel, contactType: 'customer service', areaServed: 'OM', availableLanguage: ['en', 'ar'] })),
@@ -22,7 +22,7 @@ export function business(lang: Lang) {
     telephone: site.phone,
     ...(site.email && { email: site.email }),
     image: abs('/og.png'),
-    logo: abs('/logo.svg'),
+    logo: abs('/favicon-512.png'),
     priceRange: '$$',
     foundingDate: String(site.foundedYear),
     address: {

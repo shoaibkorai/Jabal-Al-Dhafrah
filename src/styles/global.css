@@ -2,14 +2,15 @@
 
 @theme {
   --font-sans: 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
-  --color-brand-50: #eef7fb;
-  --color-brand-100: #d5ecf5;
-  --color-brand-500: #0f7fb3;
-  --color-brand-600: #0b6896;
-  --color-brand-700: #0a5378;
-  --color-brand-900: #072f45;
-  --color-accent-400: #ffb547;
-  --color-accent-500: #f59e0b;
+  /* Servixo brand kit palette: navy #0B2D5B, orange #F57C00 */
+  --color-brand-50: #eef3fa;
+  --color-brand-100: #d6e2f2;
+  --color-brand-500: #2563b0;
+  --color-brand-600: #1b4d92;
+  --color-brand-700: #14407d;
+  --color-brand-900: #0b2d5b;
+  --color-accent-400: #ff9a33;
+  --color-accent-500: #f57c00;
   --color-wa: #128043; /* WhatsApp-style green, darkened for 4.5:1 contrast with white */
   --color-wa-dark: #0e6a37;
   --color-ink: #0f1d2a;
